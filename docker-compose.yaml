@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  httpd:
+    build:
+      context: .
+      target: local_httpd
+      args:
+        - USER_ID=1000
+        - GROUP_ID=1000
+    ports:
+      - 8080:80
+    volumes:
+      - ./public:/usr/local/apache2/htdocs
+    command: sh -c 'httpd-foreground'
