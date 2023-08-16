@@ -1,9 +1,9 @@
 <?php
 
-namespace app\Service\Configuration;
+namespace Unit\Service\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Util\Reflection;
+use app\Service\Configuration\Configuration;
 
 class ConfigurationTest extends TestCase
 {

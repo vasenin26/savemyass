@@ -12,12 +12,10 @@ class Router
     /**
      * @throws \Exception
      */
-    public function getController()
+    public function getController(): string
     {
         $path = $this->request->getUri();
-        $controller = $this->resolveController($path);
-
-        return new $controller;
+        return $this->resolveController($path);
     }
 
     public function getAction(): string

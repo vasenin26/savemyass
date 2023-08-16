@@ -24,7 +24,7 @@ class RouterTest extends TestCase
 
         $controller = $route->getController();
 
-        $this->assertInstanceOf($exceptedController, $controller);
+        $this->assertEquals($exceptedController, $controller);
     }
 
     public function getControllerMap(): \Iterator

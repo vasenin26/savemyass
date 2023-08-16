@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Unit\Storage;
+namespace Unit\Storage;
 
 use app\Storage\ConfigurationFile;
 use PHPUnit\Framework\TestCase;

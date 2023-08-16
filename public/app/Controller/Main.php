@@ -4,26 +4,31 @@ namespace app\Controller;
 
 use app\Http\Response\ProtectedPage;
 use app\Http\Response\Response;
+use app\Http\Request\Request;
 use app\Service\Configuration\Configuration;
+use app\Service\Configuration\Wizard;
 use app\Service\Publisher\Publisher;
 
-class Main
+final class Main extends AbstractController
 {
     /**
      * @throws \Exception
      */
-    public function getAction(Resquest $resquest): Response
+    public function getAction(Request $request): Response
     {
-        $configuration = new Configuration();
-
-        if ($configuration->isConfigured()) {
-            if ($configuration->isPublish()) {
+        if ($this->configuration->isConfigured()) {
+            if ($this->configuration->isPublish()) {
                 return (new Publisher())->getPublicPage();
             }
 
             return new ProtectedPage();
         }
 
-        return $configuration->getWizard()->getPage($resquest);
+        return $this->getConfigurationWizard()->getPage($request);
+    }
+
+    private function getConfigurationWizard(): Wizard
+    {
+        return new Wizard($this->configuration);
     }
 }

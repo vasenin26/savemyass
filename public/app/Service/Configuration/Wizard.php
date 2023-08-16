@@ -2,8 +2,7 @@
 
 namespace app\Service\Configuration;
 
-use app\Http\Request\HttpRequest;
-use app\Http\Response\HtmlPage;
+use app\Http\Request\Request;
 use app\Http\Response\Response;
 use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\WizardAction;
@@ -11,7 +10,9 @@ use Exception;
 
 class Wizard
 {
-    public function __construct(private Configuration $configuration)
+    private const STATE_SET_PASSWORD = 'password_form';
+
+    public function __construct(private readonly Configuration $configuration)
     {
 
     }
@@ -30,10 +31,10 @@ class Wizard
     /**
      * @throws Exception
      */
-    public function getStateAction(string $state, HttpRequest $request): WizardAction
+    private function getStateAction(string $state, Request $request): WizardAction
     {
         $actionClass = [
-            'password_form' => SetPassword::class
+            self::STATE_SET_PASSWORD => SetPassword::class
         ][$state] ?? null;
 
         if (!$actionClass) {
@@ -49,7 +50,7 @@ class Wizard
     private function getWizardState(): string
     {
         $options = [
-            'password' => 'password_form'
+            'password' => self::STATE_SET_PASSWORD
         ];
 
         foreach ($options as $option => $state) {

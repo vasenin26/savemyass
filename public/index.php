@@ -7,4 +7,7 @@ spl_autoload_register(function ($class) {
 $request = new \app\Http\Request\HttpRequest();
 $route = new \app\Router($request);
 
-(new \app\App($route))();
+$storage = new \app\Storage\ConfigurationFile('config.ini');
+$configuration = new \app\Service\Configuration\Configuration($storage);
+
+(new \app\App($configuration, $route))();

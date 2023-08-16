@@ -1,9 +1,10 @@
 <?php
 
-namespace tests\Unit;
+namespace Unit;
 
 use app\App;
 use app\Router;
+use app\Service\Configuration\Configuration;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +15,8 @@ class AppTest extends TestCase
         $request->shouldReceive('getUri')->andReturn('/');
 
         $route = new Router($request);
-        $app = new App($route);
+        $configuration = Mockery::mock(\app\Service\Configuration\Configuration::class);
+        $app = new App($configuration, $route);
 
         $this->assertInstanceOf(App::class, $app);
     }
