@@ -5,13 +5,15 @@ namespace app;
 use app\Http\Response\ErrorPage;
 class App
 {
+    public function __construct(private readonly Router $router) {
+
+    }
+
     public function __invoke()
     {
-        $router = new \app\Router();
-
         try {
-            $controller = $router->getController();
-            $method = $router->getAction();
+            $controller = $this->router->getController();
+            $method = $this->router->getAction();
 
             $response = $controller->$method();
         } catch (\Exception $e) {

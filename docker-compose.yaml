@@ -9,7 +9,8 @@ services:
         - USER_ID=1000
         - GROUP_ID=1000
     ports:
-      - 8080:80
+      - 8080:8080
     volumes:
       - ./public:/usr/local/apache2/htdocs
+      - .:/app/httpd
     command: sh -c 'httpd-foreground'

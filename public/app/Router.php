@@ -4,7 +4,7 @@ namespace app;
 
 class Router
 {
-    public function __construct()
+    public function __construct(private readonly Http\Request\Request $request)
     {
 
     }
@@ -14,7 +14,7 @@ class Router
      */
     public function getController()
     {
-        $path = $this->getPath();
+        $path = $this->request->getUri();
         $controller = $this->resolveController($path);
 
         return new $controller;
@@ -23,11 +23,6 @@ class Router
     public function getAction(): string
     {
         return 'getAction';
-    }
-
-    private function getPath(): string
-    {
-        return $_SERVER['REQUEST_URI'];
     }
 
     private function resolveController(string $path): string
