@@ -38,6 +38,11 @@ class Configuration implements ArrayAccess
         return true;
     }
 
+    public function isSet(string $key): bool
+    {
+        return array_key_exists($key, $this->options);
+    }
+
     public function getOption(string $key): null|string|bool
     {
         return $this->options[$key] ?? null;

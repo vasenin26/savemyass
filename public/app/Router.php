@@ -2,6 +2,8 @@
 
 namespace app;
 
+use app\Http\Request\HttpRequest;
+
 class Router
 {
     public function __construct(private readonly Http\Request\Request $request)
@@ -20,13 +22,17 @@ class Router
 
     public function getAction(): string
     {
-        return 'getAction';
+        return [
+            HttpRequest::METHOD_GET => 'getAction',
+            HttpRequest::METHOD_POST => 'postAction'
+        ][$this->request->getMethod()];
     }
 
     private function resolveController(string $path): string
     {
         $controllerName = [
             '/' => Controller\Main::class,
+            '/wizard' => Controller\wizard::class,
             '/s' => Controller\Prolongation::class
         ][$path] ?? null;
 

@@ -4,6 +4,7 @@ namespace app\Service\Configuration;
 
 use app\Http\Request\Request;
 use app\Http\Response\Response;
+use app\Service\Configuration\WizardAction\FullConfigured;
 use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\WizardAction;
 use Exception;
@@ -11,54 +12,60 @@ use Exception;
 class Wizard
 {
     private const STATE_SET_PASSWORD = 'password_form';
+    private const STATE_CONFIGURED = 'configured';
+    const CONFIGURED_OPTION_TO_STATE = [
+        'password' => self::STATE_SET_PASSWORD,
+    ];
 
-    public function __construct(private readonly Configuration $configuration)
+    private readonly WizardAction $state;
+
+    public function __construct(private readonly Configuration $configuration, Request $request)
     {
+        $this->state = $this->getAction($request);
+    }
 
+    public function execute(): Response
+    {
+        return $this->state->execute();
     }
 
     /**
      * @throws Exception
      */
-    public function getPage(Request $request): Response
+    private function getAction(Request $request): WizardAction
     {
         $state = $this->getWizardState();
-        $stateAction = $this->getStateAction($state, $request);
-
-        return $stateAction->execute();
+        return $this->getStateAction($state, $request);
     }
 
     /**
      * @throws Exception
      */
-    private function getStateAction(string $state, Request $request): WizardAction
+    private function getWizardState(): ?string
     {
-        $actionClass = [
-            self::STATE_SET_PASSWORD => SetPassword::class
-        ][$state] ?? null;
-
-        if (!$actionClass) {
-            throw new Exception('Unknown wizard state', 500);
+        if ($this->configuration->isConfigured()) {
+            return self::STATE_CONFIGURED;
         }
 
-        return new $actionClass($this->configuration, $request);
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function getWizardState(): string
-    {
-        $options = [
-            'password' => self::STATE_SET_PASSWORD
-        ];
-
-        foreach ($options as $option => $state) {
-            if ($this->configuration->getOption($option) === null) {
+        foreach (self::CONFIGURED_OPTION_TO_STATE as $option => $state) {
+            if (!$this->configuration->isSet($option)) {
                 return $state;
             }
         }
 
-        throw new Exception('Nothing to set up', 500);
+        return null;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function getStateAction(?string $state, Request $request): WizardAction
+    {
+        $actionClass = [
+            self::STATE_SET_PASSWORD => SetPassword::class,
+            self::STATE_CONFIGURED => FullConfigured::class
+        ][$state];
+
+        return new $actionClass($this->configuration, $request);
     }
 }

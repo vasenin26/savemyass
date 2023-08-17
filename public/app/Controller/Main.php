@@ -3,10 +3,9 @@
 namespace app\Controller;
 
 use app\Http\Response\ProtectedPage;
+use app\Http\Response\Redirect;
 use app\Http\Response\Response;
 use app\Http\Request\Request;
-use app\Service\Configuration\Configuration;
-use app\Service\Configuration\Wizard;
 use app\Service\Publisher\Publisher;
 
 final class Main extends AbstractController
@@ -24,11 +23,6 @@ final class Main extends AbstractController
             return new ProtectedPage();
         }
 
-        return $this->getConfigurationWizard()->getPage($request);
-    }
-
-    private function getConfigurationWizard(): Wizard
-    {
-        return new Wizard($this->configuration);
+        return new Redirect('/wizard');
     }
 }
