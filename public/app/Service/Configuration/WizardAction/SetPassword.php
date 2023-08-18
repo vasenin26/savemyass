@@ -7,12 +7,12 @@ use app\Http\Response\HtmlPage;
 use app\Http\Response\Redirect;
 use app\Http\Response\Response;
 use app\Http\Request\Request;
-use app\Service\Configuration\Configuration;
+use app\Service\Configuration\MainConfiguration;
 use Mockery\Exception;
 
 class SetPassword implements WizardAction
 {
-    public function __construct(private readonly Configuration $configuration, readonly private Request $request)
+    public function __construct(private readonly MainConfiguration $configuration, readonly private Request $request)
     {
 
     }

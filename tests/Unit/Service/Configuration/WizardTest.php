@@ -4,9 +4,10 @@ namespace Unit\Service\Configuration;
 
 use app\Http\Response\HtmlPage;
 use app\Http\Response\Redirect;
+use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\WizardAction\SetPassword;
 use PHPUnit\Framework\TestCase;
-use app\Service\Configuration\Configuration as ConfigurationUtil;
+use app\Service\Configuration\MainConfiguration as ConfigurationUtil;
 use app\Service\Configuration\Wizard;
 use PHPUnit\TextUI\XmlConfiguration\Logging\TestDox\Html;
 
@@ -14,11 +15,9 @@ class WizardTest extends TestCase
 {
     public function testGetAction()
     {
-        $storage = \Mockery::mock(\app\Storage\Configuration::class);
-        $storage->shouldReceive('getOptions')
-            ->andReturn([]);
-
-        $configuration = new ConfigurationUtil($storage);
+        $configuration = \Mockery::mock(MainConfiguration::class, \ArrayAccess::class);
+        $configuration->shouldReceive('isConfigured')->andReturn(false);
+        $configuration->shouldReceive('isSet')->andReturn(false);
 
         $request = \Mockery::mock(\app\Http\Request\Request::class);
         $request->shouldReceive('getUri')->andReturn('/');
@@ -30,18 +29,11 @@ class WizardTest extends TestCase
 
         $this->assertInstanceOf(HtmlPage::class, $response);
     }
+
     public function testConfiguredWizard()
     {
-        $configuration = new class extends ConfigurationUtil {
-            public function __construct()
-            {
-            }
-
-            public function isConfigured(): bool
-            {
-                return true;
-            }
-        };
+        $configuration = \Mockery::mock(MainConfiguration::class, \ArrayAccess::class);
+        $configuration->shouldReceive('isConfigured')->andReturn(true);
 
         $request = \Mockery::mock(\app\Http\Request\Request::class);
         $request->shouldReceive('getUri')->andReturn('/');

@@ -7,7 +7,6 @@ use app\Http\Request\Request;
 use app\Http\Response\HtmlPage;
 use app\Http\Response\ProtectedPage;
 use app\Http\Response\Redirect;
-use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Publisher\DataPublisher;
 use PHPUnit\Framework\TestCase;

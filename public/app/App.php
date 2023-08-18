@@ -3,7 +3,6 @@
 namespace app;
 
 use app\Http\Response\ErrorPage;
-use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 
 class App

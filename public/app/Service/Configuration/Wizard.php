@@ -19,7 +19,7 @@ class Wizard
 
     private readonly WizardAction $state;
 
-    public function __construct(private readonly Configuration $configuration, Request $request)
+    public function __construct(private readonly MainConfiguration $configuration, Request $request)
     {
         $this->state = $this->getAction($request);
     }
