@@ -6,10 +6,15 @@ use app\Http\Response\ProtectedPage;
 use app\Http\Response\Redirect;
 use app\Http\Response\Response;
 use app\Http\Request\Request;
-use app\Service\Publisher\Publisher;
+use app\Service\Configuration\MainConfiguration;
+use app\Service\Publisher\DataPublisher;
 
-final class Main extends AbstractController
+final class Main
 {
+    public function __construct(private readonly MainConfiguration $configuration, private readonly DataPublisher $publisher)
+    {
+
+    }
     /**
      * @throws \Exception
      */
@@ -17,7 +22,8 @@ final class Main extends AbstractController
     {
         if ($this->configuration->isConfigured()) {
             if ($this->configuration->isPublish()) {
-                return (new Publisher())->getPublicPage();
+                $this->publisher->publish();
+                return $this->publisher->getPublicPage();
             }
 
             return new ProtectedPage();

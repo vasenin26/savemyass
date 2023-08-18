@@ -6,7 +6,7 @@ use app\Http\Request\Request;
 use app\Http\Response\Response;
 use app\Service\Configuration\WizardAction\WizardAction;
 
-class Wizard extends AbstractController
+class Wizard
 {
     /**
      * @throws \Exception
