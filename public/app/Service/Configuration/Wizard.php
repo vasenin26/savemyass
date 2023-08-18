@@ -13,7 +13,7 @@ class Wizard
 {
     private const STATE_SET_PASSWORD = 'password_form';
     private const STATE_CONFIGURED = 'configured';
-    const CONFIGURED_OPTION_TO_STATE = [
+    public const CONFIGURED_OPTION_TO_STATE = [
         'password' => self::STATE_SET_PASSWORD,
     ];
 

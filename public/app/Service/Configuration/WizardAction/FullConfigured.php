@@ -9,7 +9,6 @@ use app\Service\Configuration\Configuration;
 
 class FullConfigured implements WizardAction
 {
-
     public function __construct(Configuration $configuration, Request $request)
     {
     }

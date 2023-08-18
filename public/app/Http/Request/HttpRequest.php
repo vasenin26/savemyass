@@ -4,8 +4,8 @@ namespace app\Http\Request;
 
 class HttpRequest implements Request
 {
-    const METHOD_GET = 'GET';
-    const METHOD_POST = 'POST';
+    public const METHOD_GET = 'GET';
+    public const METHOD_POST = 'POST';
 
     public function getUri(): string
     {

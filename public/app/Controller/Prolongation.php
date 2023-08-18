@@ -4,5 +4,4 @@ namespace app\Controller;
 
 class Prolongation
 {
-
 }

@@ -4,9 +4,8 @@ namespace app\Service\Configuration;
 
 use ArrayAccess;
 
-class Configuration implements ArrayAccess
+class Configuration implements ArrayAccess, MainConfiguration
 {
-
     private const PUBLISH_OPTION_NAME = 'publish_timestamp';
 
     private const REQUIRE_OPTIONS = [

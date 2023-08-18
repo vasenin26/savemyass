@@ -47,9 +47,15 @@ class ConfigurationFile implements Configuration
 
             list($key, $value) = $line;
 
-            if ($value === "true") $value = true;
-            if ($value === "false") $value = false;
-            if (is_numeric($value)) $value = (int)$value;
+            if ($value === "true") {
+                $value = true;
+            }
+            if ($value === "false") {
+                $value = false;
+            }
+            if (is_numeric($value)) {
+                $value = (int)$value;
+            }
 
             $this->options[$key] = $value;
         }
@@ -63,8 +69,12 @@ class ConfigurationFile implements Configuration
         fwrite($file, implode("\n", array_map(function ($item) {
             $value = $this->options[$item];
 
-            if ($value === true) $value = "true";
-            if ($value === false) $value = "false";
+            if ($value === true) {
+                $value = "true";
+            }
+            if ($value === false) {
+                $value = "false";
+            }
 
             return "{$item}={$value}";
         }, array_keys($this->options))));

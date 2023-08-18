@@ -1,7 +1,7 @@
 <?php
 
 
-namespace tests\Unit;
+namespace Unit;
 
 use app\Controller\Main;
 use app\Controller\Prolongation;

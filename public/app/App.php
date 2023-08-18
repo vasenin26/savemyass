@@ -4,10 +4,12 @@ namespace app;
 
 use app\Http\Response\ErrorPage;
 use app\Service\Configuration\Configuration;
+use app\Service\Configuration\MainConfiguration;
 
 class App
 {
-    public function __construct(private readonly Configuration $configuration, private readonly Router $router) {
+    public function __construct(private ServiceContainer $serviceContainer, readonly MainConfiguration $configuration, private readonly Router $router)
+    {
 
     }
 
@@ -15,7 +17,7 @@ class App
     {
         try {
             $controllerName = $this->router->getController();
-            $controller = $this->createController($controllerName);
+            $controller = $this->serviceContainer->resolve($controllerName);
             $method = $this->router->getAction();
 
             $response = $controller->$method();
@@ -24,10 +26,5 @@ class App
         }
 
         echo $response->getContent();
-    }
-
-    private function createController(string $controllerName)
-    {
-        return new $controllerName($this->configuration);
     }
 }
