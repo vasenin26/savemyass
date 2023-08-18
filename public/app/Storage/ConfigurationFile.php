@@ -7,9 +7,9 @@ class ConfigurationFile implements Configuration
     private const DIRECTORY = '/';
     private array $options = [];
 
-    public function __construct(private string $fileName)
+    public function __construct(private readonly string $fileName)
     {
-        $this->loadOptions($this->fileName);
+        $this->loadOptions();
     }
 
     public function getOptions(): array
@@ -27,10 +27,14 @@ class ConfigurationFile implements Configuration
         return __DIR__ . self::DIRECTORY . $this->fileName;
     }
 
-    private function loadOptions(string $fileName): void
+    private function loadOptions(): void
     {
         try {
-            $content = file_get_contents($this->getPath($fileName));
+            if(!file_exists($this->getPath())) {
+                return;
+            }
+
+            $content = file_get_contents($this->getPath());
             $lines = explode("\n", $content);
         } catch (\Exception $e) {
             return;
