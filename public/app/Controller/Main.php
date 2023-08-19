@@ -7,11 +7,11 @@ use app\Http\Response\Redirect;
 use app\Http\Response\Response;
 use app\Http\Request\Request;
 use app\Service\Configuration\MainConfiguration;
-use app\Service\Publisher\DataPublisher;
+use app\Service\Publisher\Publisher;
 
 final class Main
 {
-    public function __construct(private readonly MainConfiguration $configuration, private readonly DataPublisher $publisher)
+    public function __construct(private readonly MainConfiguration $configuration, private readonly Publisher $publisher)
     {
 
     }

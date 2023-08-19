@@ -2,14 +2,10 @@
 
 namespace app\Service\Publisher;
 
-class Publisher implements DataPublisher
+use app\Http\Response\Response;
+
+interface Publisher
 {
-    public function getPublicPage(): \app\Http\Response\Response
-    {
-    }
-
-    public function publish(): void
-    {
-
-    }
+    public function getPublicPage(): Response;
+    public function publish(): void;
 }

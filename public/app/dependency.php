@@ -6,5 +6,5 @@ return [
         return new \app\Service\Configuration\Configuration($storage);
     },
     app\Http\Request\Request::class => \app\Http\Request\HttpRequest::class,
-    app\Service\Publisher\DataPublisher::class => app\Service\Publisher\Publisher::class
+    app\Service\Publisher\Publisher::class => app\Service\Publisher\DataPublisher::class
 ];

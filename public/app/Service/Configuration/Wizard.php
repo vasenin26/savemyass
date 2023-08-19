@@ -6,15 +6,18 @@ use app\Http\Request\Request;
 use app\Http\Response\Response;
 use app\Service\Configuration\WizardAction\FullConfigured;
 use app\Service\Configuration\WizardAction\SetPassword;
+use app\Service\Configuration\WizardAction\SetPublishOptions;
 use app\Service\Configuration\WizardAction\WizardAction;
 use Exception;
 
 class Wizard
 {
-    private const STATE_SET_PASSWORD = 'password_form';
+    private const STATE_SET_PASSWORD = 0x0;
+    private const STATE_SET_PUBLISH_OPTIONS = 0x1;
     private const STATE_CONFIGURED = 'configured';
     public const CONFIGURED_OPTION_TO_STATE = [
         'password' => self::STATE_SET_PASSWORD,
+        'publish_timestamp' => self::STATE_SET_PUBLISH_OPTIONS
     ];
 
     private readonly WizardAction $state;
@@ -63,6 +66,7 @@ class Wizard
     {
         $actionClass = [
             self::STATE_SET_PASSWORD => SetPassword::class,
+            self::STATE_SET_PUBLISH_OPTIONS => SetPublishOptions::class,
             self::STATE_CONFIGURED => FullConfigured::class
         ][$state];
 

@@ -4,7 +4,7 @@ namespace app\Storage;
 
 class ConfigurationFile implements Configuration
 {
-    private const DIRECTORY = '/';
+    private const DIRECTORY = '/data/';
     private array $options = [];
 
     public function __construct(private readonly string $fileName)

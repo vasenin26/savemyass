@@ -8,7 +8,7 @@ use app\Http\Response\HtmlPage;
 use app\Http\Response\ProtectedPage;
 use app\Http\Response\Redirect;
 use app\Service\Configuration\MainConfiguration;
-use app\Service\Publisher\DataPublisher;
+use app\Service\Publisher\Publisher;
 use PHPUnit\Framework\TestCase;
 
 class MainTest extends TestCase
@@ -18,7 +18,7 @@ class MainTest extends TestCase
         $configuration = \Mockery::mock(MainConfiguration::class);
         $configuration->shouldReceive('isConfigured')->andReturn(false);
 
-        $publisher = \Mockery::mock(DataPublisher::class);
+        $publisher = \Mockery::mock(Publisher::class);
 
         $request = \Mockery::mock(Request::class);
         $request->shouldReceive('getUri')->andReturn('/');
@@ -38,7 +38,7 @@ class MainTest extends TestCase
         $configuration->shouldReceive('isConfigured')->andReturn(true);
         $configuration->shouldReceive('isPublish')->andReturn(false);
 
-        $publisher = \Mockery::mock(DataPublisher::class);
+        $publisher = \Mockery::mock(Publisher::class);
 
         $request = \Mockery::mock(Request::class);
         $request->shouldReceive('getUri')->andReturn('/');
@@ -57,7 +57,7 @@ class MainTest extends TestCase
         $configuration->shouldReceive('isConfigured')->andReturn(true);
         $configuration->shouldReceive('isPublish')->andReturn(true);
 
-        $publisher = \Mockery::mock(DataPublisher::class);
+        $publisher = \Mockery::mock(Publisher::class);
         $publisher->shouldReceive('getPublicPage')->andReturn(new HtmlPage(''));
         $publisher->shouldReceive('publish');
 
