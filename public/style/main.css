@@ -1,0 +1,55 @@
+:root {
+    --field-height: 36px;
+}
+
+.container {
+    max-width: 680px;
+    margin: 20px auto;
+}
+
+.form {
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 20px;
+}
+
+.form__row {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.form__row--actions {
+    display: block;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.form__col {
+    flex: 1;
+}
+
+.form__col--label {
+    text-align: left;
+    line-height: var(--field-height);
+}
+
+.form__col--field {
+
+}
+
+.form__col--field input {
+    border: 1px solid gray;
+    border-radius: 2px;
+    height: var(--field-height);
+    line-height: var(--field-height);
+    width: 100%;
+}
+
+.form__button {
+    border: 1px solid gray;
+    border-radius: 3px;
+    height: var(--field-height);
+    line-height: var(--field-height);
+    padding: 0 30px;
+}
