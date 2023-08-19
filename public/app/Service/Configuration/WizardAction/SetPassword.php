@@ -8,9 +8,10 @@ use app\Http\Response\Redirect;
 use app\Http\Response\Response;
 use app\Http\Request\Request;
 use app\Service\Configuration\MainConfiguration;
+use app\View\LayoutTemplate;
 use Mockery\Exception;
 
-class SetPassword implements WizardAction
+class SetPassword extends LayoutTemplate implements WizardAction
 {
     public function __construct(private readonly MainConfiguration $configuration, readonly private Request $request)
     {
@@ -19,23 +20,20 @@ class SetPassword implements WizardAction
 
     public function execute(): Response
     {
-        switch ($this->request->getMethod()) {
-            case HttpRequest::METHOD_GET:
-                return $this->showForm();
-            case HttpRequest::METHOD_POST:
-                return $this->setPassword();
-            default:
-                throw new Exception('Action Not Found', 404);
-        }
+        return match ($this->request->getMethod()) {
+            HttpRequest::METHOD_GET => $this->showForm(),
+            HttpRequest::METHOD_POST => $this->setPassword(),
+            default => throw new Exception('Action Not Found', 404),
+        };
     }
 
     private function showForm(): Response
     {
-        return new HtmlPage('password_form', $this->configuration);
+        return new HtmlPage('wizard/password_form', $this->configuration->getOptions());
     }
 
     private function setPassword(): Response
     {
-        return new Redirect();
+        return new Redirect('/wizard');
     }
 }

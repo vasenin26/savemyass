@@ -3,8 +3,9 @@
 namespace app\Http\Response;
 
 use app\View\AbstractTemplate;
+use app\View\LayoutTemplate;
 
-class HtmlPage extends AbstractTemplate implements Response
+class HtmlPage extends LayoutTemplate implements Response
 {
     /**
      * @return string[]

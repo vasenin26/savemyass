@@ -16,6 +16,8 @@ RUN mv /usr/lib/apache2/mod_php81.so /usr/local/apache2/modules/mod_php81.so
 
 RUN sed '/mpm_prefork_module/s/^#//' -i /usr/local/apache2/conf/httpd.conf \
     && sed '/mpm_event_module/s/^/#/' -i /usr/local/apache2/conf/httpd.conf \
+    && sed '/rewrite_module/s/^#//' -i /usr/local/apache2/conf/httpd.conf \
+    && sed '/AllowOverride/s/None/All/' -i /usr/local/apache2/conf/httpd.conf \
     && sed 's/www-data/local/' -i /usr/local/apache2/conf/httpd.conf \
     && sed '/^Listen 80/s/80/8080/' -i /usr/local/apache2/conf/httpd.conf \
     && sed 's%/usr/local/apache2/htdocs%/app/httpd/public%' -i /usr/local/apache2/conf/httpd.conf \

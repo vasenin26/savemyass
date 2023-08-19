@@ -7,5 +7,6 @@ return [
     },
     app\Http\Request\Request::class => function () {
         return new \app\Http\Request\HttpRequest();
-    }
+    },
+    app\Service\Publisher\DataPublisher::class => app\Service\Publisher\Publisher::class
 ];

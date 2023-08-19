@@ -30,19 +30,21 @@ class ServiceContainer
             return $this;
         }
 
-        if (array_key_exists($className, $this->map)) {
-            $instance = $this->map[$className];
+        $targetClass = $className;
 
-            if (is_callable($instance)) {
-                return $this->map[$className] = $instance($this);
+        if (array_key_exists($className, $this->map)) {
+            $targetClass = $this->map[$className];
+
+            if (is_callable($targetClass)) {
+                return $this->map[$className] = $targetClass($this);
             }
 
-            if (is_object($instance)) {
-                return $instance;
+            if (is_object($targetClass)) {
+                return $targetClass;
             }
         }
 
-        $reflection = new \ReflectionClass($className);
+        $reflection = new \ReflectionClass($targetClass);
         $args = [];
 
         $constructor = $reflection->getConstructor();
@@ -57,5 +59,22 @@ class ServiceContainer
         }
 
         return $this->map[$className] = $reflection->newInstanceArgs($args);
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function call($classInstance, string $method)
+    {
+        $classReflection = new \ReflectionClass($classInstance);
+        $methodReflection = $classReflection->getMethod($method);
+        $dependencies = $methodReflection->getParameters();
+        $args = [];
+
+        foreach ($dependencies as $dependency) {
+            $args[] = $this->extract($dependency->getType());
+        }
+
+        return $classInstance->$method(...$args);
     }
 }

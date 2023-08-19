@@ -4,10 +4,16 @@ namespace app\Controller;
 
 use app\Http\Request\Request;
 use app\Http\Response\Response;
+use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\WizardAction\WizardAction;
+use app\Service\Publisher\DataPublisher;
 
 class Wizard
 {
+    public function __construct(private readonly MainConfiguration $configuration)
+    {
+
+    }
     /**
      * @throws \Exception
      */

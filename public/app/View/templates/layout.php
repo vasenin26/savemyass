@@ -8,6 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    <?=$body->getContent()?>
+    <?=$body?>
 </body>
 </html>

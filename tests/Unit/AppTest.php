@@ -16,10 +16,9 @@ class AppTest extends TestCase
         $request->shouldReceive('getUri')->andReturn('/');
 
         $serviceContainer = new ServiceContainer();
-        $configuration = Mockery::mock(\app\Service\Configuration\MainConfiguration::class);
         $route = new Router($request);
 
-        $app = new App($serviceContainer, $configuration, $route);
+        $app = new App($serviceContainer, $route);
 
         $this->assertInstanceOf(App::class, $app);
     }

@@ -6,4 +6,6 @@ interface MainConfiguration
 {
     public function isPublish(): bool;
     public function isConfigured(): bool;
+
+    public function getOptions(): array;
 }
