@@ -78,7 +78,7 @@ class Configuration implements ArrayAccess, MainConfiguration
 
     public function getOptions(): array
     {
-       return $this->options;
+        return $this->options;
     }
 
     public function save(): void
