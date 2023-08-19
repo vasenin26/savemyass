@@ -5,8 +5,6 @@ return [
         $storage = new \app\Storage\ConfigurationFile('config.ini');
         return new \app\Service\Configuration\Configuration($storage);
     },
-    app\Http\Request\Request::class => function () {
-        return new \app\Http\Request\HttpRequest();
-    },
+    app\Http\Request\Request::class => \app\Http\Request\HttpRequest::class,
     app\Service\Publisher\DataPublisher::class => app\Service\Publisher\Publisher::class
 ];
