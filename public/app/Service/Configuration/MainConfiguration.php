@@ -8,4 +8,8 @@ interface MainConfiguration
     public function isConfigured(): bool;
 
     public function getOptions(): array;
+
+    public function setOption(string $key, string|int|bool|null $value): void;
+
+    public function save(): void;
 }

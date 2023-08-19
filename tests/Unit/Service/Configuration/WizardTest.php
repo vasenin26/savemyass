@@ -18,6 +18,7 @@ class WizardTest extends TestCase
         $configuration = \Mockery::mock(MainConfiguration::class, \ArrayAccess::class);
         $configuration->shouldReceive('isConfigured')->andReturn(false);
         $configuration->shouldReceive('isSet')->andReturn(false);
+        $configuration->shouldReceive('getOptions')->andReturn([]);
 
         $request = \Mockery::mock(\app\Http\Request\Request::class);
         $request->shouldReceive('getUri')->andReturn('/');

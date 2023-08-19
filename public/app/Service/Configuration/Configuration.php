@@ -47,7 +47,7 @@ class Configuration implements ArrayAccess, MainConfiguration
         return $this->options[$key] ?? null;
     }
 
-    public function setOption(string $key, string|bool $value): void
+    public function setOption(string $key, string|bool|int|null $value): void
     {
         $this->options[$key] = $value;
     }
@@ -79,5 +79,11 @@ class Configuration implements ArrayAccess, MainConfiguration
     public function getOptions(): array
     {
        return $this->options;
+    }
+
+    public function save(): void
+    {
+        $this->configuration->setOptions($this->options);
+        $this->configuration->save();
     }
 }

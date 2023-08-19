@@ -7,6 +7,7 @@ use app\Http\Response\HtmlPage;
 use app\Http\Response\Redirect;
 use app\Http\Response\Response;
 use app\Http\Request\Request;
+use app\I18n\I18n;
 use app\Service\Configuration\MainConfiguration;
 use app\View\LayoutTemplate;
 use Mockery\Exception;
@@ -29,11 +30,25 @@ class SetPassword extends LayoutTemplate implements WizardAction
 
     private function showForm(): Response
     {
-        return new HtmlPage('wizard/password_form', $this->configuration->getOptions());
+        return new HtmlPage('wizard/password_form', [
+            ...$this->configuration->getOptions(),
+            'title' => I18n::get('set_password.title')
+        ]);
     }
 
-    private function setPassword(): Response
+    private function setPassword(): Redirect
     {
-        return new Redirect('/wizard');
+        $password = $this->request->getPayload('password');
+        $redirect = new Redirect('/wizard');
+
+        if(empty($password)) {
+            $redirect->setError('password', 'error.empty_password');
+            return $redirect;
+        }
+
+        $this->configuration->setOption('password', $password);
+        $this->configuration->save();
+
+        return $redirect;
     }
 }

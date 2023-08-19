@@ -16,4 +16,14 @@ class HttpRequest implements Request
     {
         return strtoupper($_SERVER['REQUEST_METHOD']);
     }
+
+    public function getPayloadData(): array
+    {
+        return $_REQUEST;
+    }
+
+    public function getPayload(string $key): int|string|null
+    {
+        return $this->getPayloadData()[$key] ?? null;
+    }
 }

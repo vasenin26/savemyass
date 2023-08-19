@@ -3,6 +3,7 @@
 namespace app;
 
 use app\Http\Response\ErrorPage;
+use app\I18n\I18n;
 use app\Service\Configuration\MainConfiguration;
 
 class App
@@ -16,6 +17,8 @@ class App
 
     public function __invoke()
     {
+        I18n::setLanguage('ru');
+
         try {
             $method = $this->router->getAction();
             $controllerName = $this->router->getController();
