@@ -29,7 +29,7 @@ class ConfigurationTest extends TestCase
 
     public function testIsPublished()
     {
-        $publishOptionName = (new \ReflectionClassConstant(Configuration::class, 'PUBLISH_OPTION_NAME'))->getValue();
+        $publishOptionName = (new \ReflectionClassConstant(Configuration::class, 'PUBLISH_OPTION_TIMESTAMP'))->getValue();
         $storage = $this->getStorage([
             $publishOptionName => time() - 1
         ]);
@@ -41,7 +41,7 @@ class ConfigurationTest extends TestCase
 
     public function testIsNotPublished()
     {
-        $publishOptionName = (new \ReflectionClassConstant(Configuration::class, 'PUBLISH_OPTION_NAME'))->getValue();
+        $publishOptionName = (new \ReflectionClassConstant(Configuration::class, 'PUBLISH_OPTION_TIMESTAMP'))->getValue();
         $storage = $this->getStorage([
             $publishOptionName => time() + 1
         ]);

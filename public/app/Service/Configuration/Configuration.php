@@ -6,14 +6,20 @@ use ArrayAccess;
 
 class Configuration implements ArrayAccess, MainConfiguration
 {
-    public const PUBLISH_OPTION_NAME = 'publish_timestamp';
     public const PASSWORD_OPTION_NAME = 'password';
+    public const PUBLISH_OPTION_TIMESTAMP = 'publish_timestamp';
+    public const PUBLISH_OPTION_EMAILS = 'emails';
+    public const PUBLISH_OPTION_MESSAGE = 'message';
+    public const PUBLISH_OPTION_FOR_ALL = 'for_all';
 
     private const REQUIRE_OPTIONS = [
         self::PASSWORD_OPTION_NAME,
-        self::PUBLISH_OPTION_NAME
+        self::PUBLISH_OPTION_TIMESTAMP,
+        self::PUBLISH_OPTION_EMAILS,
+        self::PUBLISH_OPTION_MESSAGE,
+        self::PUBLISH_OPTION_FOR_ALL
     ];
-    private $options = [];
+    private array $options = [];
 
     public function __construct(private readonly \app\Storage\Configuration $configuration)
     {
@@ -22,7 +28,7 @@ class Configuration implements ArrayAccess, MainConfiguration
 
     public function isPublish(): bool
     {
-        $publishTimestamp = $this->getOption(self::PUBLISH_OPTION_NAME);
+        $publishTimestamp = $this->getOption(self::PUBLISH_OPTION_TIMESTAMP);
 
         return $publishTimestamp < time();
     }

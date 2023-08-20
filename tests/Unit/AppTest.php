@@ -7,6 +7,7 @@ use app\Router;
 use app\ServiceContainer;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use Utils\FakeSession;
 
 class AppTest extends TestCase
 {
@@ -18,7 +19,9 @@ class AppTest extends TestCase
         $serviceContainer = new ServiceContainer();
         $route = new Router($request);
 
-        $app = new App($serviceContainer, $route);
+        $session = new FakeSession();
+
+        $app = new App($serviceContainer, $route, $session);
 
         $this->assertInstanceOf(App::class, $app);
     }

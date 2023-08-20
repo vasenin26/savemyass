@@ -10,10 +10,9 @@ use app\Http\Request\Request;
 use app\I18n\I18n;
 use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
-use app\View\LayoutTemplate;
 use Mockery\Exception;
 
-class SetPassword extends LayoutTemplate implements WizardAction
+class SetPassword implements WizardAction
 {
     public function __construct(private readonly MainConfiguration $configuration, readonly private Request $request)
     {
