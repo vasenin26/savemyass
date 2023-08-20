@@ -11,15 +11,15 @@ class App
 {
     public function __construct(
         private readonly ServiceContainer $serviceContainer,
-        private readonly Router           $router
+        private readonly Router           $router,
+        private readonly Session          $session
     ) {
 
     }
 
     public function __invoke()
     {
-        $session = new Session();
-        I18n::setLanguage($session->getOption(Session::OPTION_LANG) ?? 'en');
+        I18n::setLanguage($this->session->getOption(Session::OPTION_LANG) ?? 'en');
 
         try {
             $method = $this->router->getAction();
