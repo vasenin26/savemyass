@@ -6,10 +6,11 @@ use ArrayAccess;
 
 class Configuration implements ArrayAccess, MainConfiguration
 {
-    private const PUBLISH_OPTION_NAME = 'publish_timestamp';
+    public const PUBLISH_OPTION_NAME = 'publish_timestamp';
+    public const PASSWORD_OPTION_NAME = 'password';
 
     private const REQUIRE_OPTIONS = [
-        'password',
+        self::PASSWORD_OPTION_NAME,
         self::PUBLISH_OPTION_NAME
     ];
     private $options = [];

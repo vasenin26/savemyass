@@ -8,6 +8,7 @@ use app\Http\Response\Redirect;
 use app\Http\Response\Response;
 use app\Http\Request\Request;
 use app\I18n\I18n;
+use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 use app\View\LayoutTemplate;
 use Mockery\Exception;
@@ -23,7 +24,7 @@ class SetPublishOptions extends LayoutTemplate implements WizardAction
     {
         return match ($this->request->getMethod()) {
             HttpRequest::METHOD_GET => $this->showForm(),
-            HttpRequest::METHOD_POST => $this->setPassword(),
+            HttpRequest::METHOD_POST => $this->saveForm(),
             default => throw new Exception('Action Not Found', 404),
         };
     }
@@ -36,17 +37,17 @@ class SetPublishOptions extends LayoutTemplate implements WizardAction
         ]);
     }
 
-    private function setPassword(): Redirect
+    private function saveForm(): Redirect
     {
-        $password = $this->request->getPayload('password');
+        $delay = $this->request->getPayload('delay');
         $redirect = new Redirect('/wizard');
 
-        if(empty($password)) {
-            $redirect->setError('password', 'error.empty_password');
+        if(empty($delay)) {
+            $redirect->setError('delay', 'error.empty_password');
             return $redirect;
         }
 
-        $this->configuration->setOption('password', $password);
+        $this->configuration->setOption(Configuration::PUBLISH_OPTION_NAME, $delay);
         $this->configuration->save();
 
         return $redirect;

@@ -16,8 +16,8 @@ class Wizard
     private const STATE_SET_PUBLISH_OPTIONS = 0x1;
     private const STATE_CONFIGURED = 'configured';
     public const CONFIGURED_OPTION_TO_STATE = [
-        'password' => self::STATE_SET_PASSWORD,
-        'publish_timestamp' => self::STATE_SET_PUBLISH_OPTIONS
+        Configuration::PASSWORD_OPTION_NAME => self::STATE_SET_PASSWORD,
+        Configuration::PUBLISH_OPTION_NAME => self::STATE_SET_PUBLISH_OPTIONS
     ];
 
     private readonly WizardAction $state;
