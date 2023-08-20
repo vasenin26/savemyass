@@ -12,6 +12,16 @@ class ConfigurationFile implements Configuration
         $this->loadOptions();
     }
 
+    public function getOption($key): string|int|bool|null
+    {
+        return $this->options[$key];
+    }
+
+    public function setOption($key, $value): void
+    {
+        $this->options[$key] = $value;
+    }
+
     public function getOptions(): array
     {
         return $this->options;

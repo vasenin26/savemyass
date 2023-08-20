@@ -5,6 +5,7 @@ namespace app;
 use app\Http\Response\ErrorPage;
 use app\I18n\I18n;
 use app\Service\Configuration\MainConfiguration;
+use app\Storage\Session;
 
 class App
 {
@@ -17,7 +18,8 @@ class App
 
     public function __invoke()
     {
-        I18n::setLanguage('ru');
+        $session = new Session();
+        I18n::setLanguage($session->getOption(Session::OPTION_LANG) ?? 'en');
 
         try {
             $method = $this->router->getAction();

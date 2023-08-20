@@ -4,11 +4,13 @@ namespace app\Storage;
 
 interface Configuration
 {
-    public function __construct(string $fileName);
-
     public function getOptions(): array;
 
     public function setOptions(array $options): void;
+
+    public function getOption($key): string|int|bool|null;
+
+    public function setOption($key, $value): void;
 
     public function save(): void;
 

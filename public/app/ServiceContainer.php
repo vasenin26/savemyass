@@ -2,8 +2,6 @@
 
 namespace app;
 
-use app\Service\Configuration\MainConfiguration;
-
 class ServiceContainer
 {
     private array $map = [];

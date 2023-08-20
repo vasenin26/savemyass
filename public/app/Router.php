@@ -33,6 +33,7 @@ class Router
         $controllerName = [
             '/' => Controller\Main::class,
             '/wizard' => Controller\Wizard::class,
+            '/configure' => Controller\Configuration::class,
             '/s' => Controller\Prolongation::class
         ][$path] ?? null;
 
