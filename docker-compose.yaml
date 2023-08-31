@@ -8,6 +8,8 @@ services:
       args:
         - USER_ID=1000
         - GROUP_ID=1000
+        - XDEBUG_CLIENT_HOST=host.docker.internal
+        - XDEBUG_CLIENT_PORT=9003
     ports:
       - 8080:8080
     volumes:

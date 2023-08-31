@@ -10,7 +10,6 @@ use app\Storage\Session;
 
 class Configuration
 {
-
     public function __construct(readonly private Session $session, private readonly I18n $i18n)
     {
     }

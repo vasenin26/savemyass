@@ -4,7 +4,7 @@ namespace app\Storage;
 
 class Session implements Configuration
 {
-    const OPTION_LANG = 'lang';
+    public const OPTION_LANG = 'lang';
     private array $options = [];
 
     private function __construct()
