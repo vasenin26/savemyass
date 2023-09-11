@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class SetPublishOptionsTest extends TestCase
 {
-
     public function testGetHtmlPage()
     {
         $configuration = \Mockery::mock(MainConfiguration::class);

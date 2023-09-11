@@ -5,7 +5,7 @@ return [
         $storage = new \app\Storage\ConfigurationFile('config.ini');
         return new \app\Service\Configuration\Configuration($storage);
     },
-    app\Http\Request\Request::class => \app\Http\Request\HttpRequest::class,
+    app\Http\Request\Request::class => fn () => new \app\Http\Request\HttpRequest($_SERVER, $_REQUEST),
     app\Service\Publisher\Publisher::class => app\Service\Publisher\DataPublisher::class,
     app\I18n\I18n::class => function () {
         $session = \app\Storage\Session::getInstance();

@@ -51,6 +51,44 @@ class ConfigurationTest extends TestCase
         $this->assertFalse($configuration->isPublish());
     }
 
+    public function testArrayAccessInterface()
+    {
+        $storage = $this->getStorage([
+            'available_value' => 'value',
+            'for_unset' => true
+        ]);
+        $storage->shouldReceive('setOptions');
+        $storage->shouldReceive('save')->andReturn(true);
+
+        $configuration = new Configuration($storage);
+
+        $this->assertTrue($configuration->isSet('available_value'));
+        $this->assertFalse($configuration->isSet('unavailable_value'));
+
+        $this->assertTrue($configuration->offsetExists('available_value'));
+        $this->assertFalse($configuration->offsetExists('unavailable_value'));
+
+        $this->assertTrue($configuration->offsetExists('for_unset'));
+        $configuration->offsetUnset('for_unset');
+        $this->assertFalse($configuration->offsetExists('for_unset'));
+
+        $this->assertEquals('value', $configuration->offsetGet('available_value'));
+        $this->assertEquals(null, $configuration->offsetGet('unavailable_value'));
+
+        $configuration->setOption('additional_option', 'other_value');
+        $configuration->offsetSet(null, 'nullable_value');
+        $configuration->offsetSet('offset_key', 'offset_value');
+
+        $this->assertEquals([
+            'nullable_value',
+            'available_value' => 'value',
+            'additional_option' => 'other_value',
+            'offset_key' => 'offset_value'
+        ], $configuration->getOptions());
+
+        $configuration->save();
+    }
+
     private function getStorage(array $options): \app\Storage\Configuration
     {
         $storage = \Mockery::mock(\app\Storage\Configuration::class);

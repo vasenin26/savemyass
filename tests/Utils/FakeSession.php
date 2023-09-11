@@ -5,7 +5,7 @@ namespace Utils;
 use app\Storage\Configuration;
 use app\Storage\Session;
 
-class FakeSession extends Session  implements Configuration
+class FakeSession extends Session implements Configuration
 {
     private array $options = [];
 

@@ -7,19 +7,26 @@ class HttpRequest implements Request
     public const METHOD_GET = 'GET';
     public const METHOD_POST = 'POST';
 
+    public const PARAMS_KEY_URI = 'REQUEST_URI';
+    public const PARAMS_KEY_METHOD = 'REQUEST_METHOD';
+
+    public function __construct(private readonly array $params, private readonly array $payload)
+    {
+    }
+
     public function getUri(): string
     {
-        return $_SERVER['REQUEST_URI'];
+        return $this->params[self::PARAMS_KEY_URI];
     }
 
     public function getMethod(): string
     {
-        return strtoupper($_SERVER['REQUEST_METHOD']);
+        return strtoupper($this->params[self::PARAMS_KEY_METHOD]);
     }
 
     public function getPayloadData(): array
     {
-        return $_REQUEST;
+        return $this->payload;
     }
 
     public function getPayload(string $key): int|string|null

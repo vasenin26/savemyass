@@ -8,7 +8,7 @@ use app\Service\Configuration\MainConfiguration;
 
 class Wizard
 {
-    public function __construct(private readonly MainConfiguration $configuration)
+    public function __construct(private readonly \app\Service\Configuration\Wizard $wizard)
     {
 
     }
@@ -17,7 +17,7 @@ class Wizard
      */
     public function getAction(Request $request): Response
     {
-        return $this->getWizardAction($request);
+        return $this->wizard->execute();
     }
 
     /**
@@ -25,14 +25,6 @@ class Wizard
      */
     public function postAction(Request $request): Response
     {
-        return $this->getWizardAction($request);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    private function getWizardAction(Request $request): Response
-    {
-        return (new \app\Service\Configuration\Wizard($this->configuration, $request))->execute();
+        return $this->wizard->execute();
     }
 }
