@@ -32,8 +32,9 @@ class ServiceContainerTest extends TestCase
 
     public function testCallAvailableServiceMethod()
     {
-        $instance = new class{
-            public function testMethod(Session $session){
+        $instance = new class () {
+            public function testMethod(Session $session)
+            {
                 return true;
             }
         };

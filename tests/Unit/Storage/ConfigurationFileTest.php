@@ -44,7 +44,11 @@ class ConfigurationFileTest extends TestCase
         $storage2 = new ConfigurationFile($storageFileName);
         $result = $storage2->getOptions();
 
+        $this->assertEquals('test', $storage2->getOption('string_value'));
         $this->assertEquals($options, $result);
+
+        $storage2->setOption('option_from_set', 'from_set');
+        $this->assertEquals('from_set', $storage2->getOption('option_from_set'));
 
         $storage2->clear();
     }

@@ -9,11 +9,13 @@ class Session implements Configuration
 
     private function __construct()
     {
+        global $_SESSION;
+
         if (session_status() !== PHP_SESSION_ACTIVE) {
             @session_start();
         }
 
-        $this->options = isset($_SESSION) ? $_SESSION : [];
+        $this->options = $_SESSION ?? [];
     }
 
     public static function getInstance(): self
@@ -43,6 +45,8 @@ class Session implements Configuration
 
     public function save(): void
     {
+        global $_SESSION;
+
         foreach ($this->options as $key => $value) {
             $_SESSION[$key] = $value;
         }
