@@ -2,9 +2,7 @@
 
 namespace app\Exceptions;
 
-use TheSeer\Tokenizer\Exception;
-
-class ValidationException extends Exception
+class ValidationException extends \Exception
 {
     private array $errors = [];
 

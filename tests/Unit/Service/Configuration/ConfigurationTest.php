@@ -89,9 +89,9 @@ class ConfigurationTest extends TestCase
         $configuration->save();
     }
 
-    private function getStorage(array $options): \app\Storage\Configuration
+    private function getStorage(array $options): \app\Storage\Storage
     {
-        $storage = \Mockery::mock(\app\Storage\Configuration::class);
+        $storage = \Mockery::mock(\app\Storage\Storage::class);
 
         $storage->shouldReceive('getOptions')
             ->andReturn($options);

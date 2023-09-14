@@ -6,7 +6,4 @@ spl_autoload_register(function ($class) {
 
 $serviceContainer = new \app\ServiceContainer();
 
-$request = new \app\Http\Request\HttpRequest();
-$route = new \app\Router($request);
-
 $serviceContainer->resolve(app\App::class)();

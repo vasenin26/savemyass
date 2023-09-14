@@ -2,7 +2,7 @@
 
 namespace app\Storage;
 
-class ConfigurationFile implements Configuration
+class StorageFile implements Storage
 {
     private const DIRECTORY = '/data/';
     private array $options = [];

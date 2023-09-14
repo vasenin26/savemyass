@@ -10,6 +10,8 @@ use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\SetPublishOptions;
+use app\Storage\Payload;
+use app\Utils\ValidationErrors;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +25,10 @@ class SetPublishOptionsTest extends TestCase
         $request = \Mockery::mock(Request::class);
         $request->shouldReceive('getMethod')->andReturn(HttpRequest::METHOD_GET);
 
-        $action = new SetPublishOptions($configuration, $request);
+        $payload = \Mockery::mock(Payload::class);
+        $payload->shouldReceive('getErrors')->andReturn(\Mockery::mock(ValidationErrors::class));
+
+        $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->execute();
 
         $this->assertInstanceOf(HtmlPage::class, $response);
@@ -44,7 +49,10 @@ class SetPublishOptionsTest extends TestCase
             'getPayload' => null
         ]);
 
-        $action = new SetPublishOptions($configuration, $request);
+        $payload = \Mockery::mock(Payload::class);
+        $payload->shouldReceive('getErrors')->andReturn([]);
+
+        $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->execute();
 
         $this->assertInstanceOf(Redirect::class, $response);
@@ -69,7 +77,10 @@ class SetPublishOptionsTest extends TestCase
         $request->shouldReceive('getPayload')
             ->andReturn($delay, $emails, $forAll);
 
-        $action = new SetPublishOptions($configuration, $request);
+        $payload = \Mockery::mock(Payload::class);
+        $payload->shouldReceive('getErrors')->andReturn([]);
+
+        $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->execute();
 
         $this->assertInstanceOf(Redirect::class, $response);
@@ -96,7 +107,10 @@ class SetPublishOptionsTest extends TestCase
         $request->shouldReceive('getPayload')
             ->andReturn($delay, $emails, $forAll);
 
-        $action = new SetPublishOptions($configuration, $request);
+        $payload = \Mockery::mock(Payload::class);
+        $payload->shouldReceive('getErrors')->andReturn([]);
+
+        $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->execute();
 
         $this->assertInstanceOf(Redirect::class, $response);

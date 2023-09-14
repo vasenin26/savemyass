@@ -12,7 +12,7 @@ class I18n implements Translator
         self::$translations = self::extractTranslations($lang);
     }
 
-    public static function setLanguage(string $lang): I18n
+    public static function getTranslations(string $lang): I18n
     {
         return self::$instance = new self($lang);
     }

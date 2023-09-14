@@ -2,9 +2,10 @@
 
 namespace app\Http\Response;
 
-class Redirect implements Response
+class Redirect implements Response, PayloadRedirect
 {
     private array $errors = [];
+    private array $payload = [];
 
     public function __construct(readonly string $url)
     {
@@ -31,5 +32,15 @@ class Redirect implements Response
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    public function getPayload(): array
+    {
+        return [...$this->payload, 'errors' => $this->errors];
+    }
+
+    public function setPayload(array $payload): void
+    {
+        $this->payload = $payload;
     }
 }

@@ -6,6 +6,9 @@ use app\Http\Request\HttpRequest;
 
 class Router
 {
+    const GET_ACTION = 'getAction';
+    const POST_ACTION = 'postAction';
+
     public function __construct(private readonly Http\Request\Request $request)
     {
 
@@ -23,8 +26,8 @@ class Router
     public function getAction(): string
     {
         return [
-            HttpRequest::METHOD_GET => 'getAction',
-            HttpRequest::METHOD_POST => 'postAction'
+            HttpRequest::METHOD_GET => self::GET_ACTION,
+            HttpRequest::METHOD_POST => self::POST_ACTION,
         ][$this->request->getMethod()];
     }
 
