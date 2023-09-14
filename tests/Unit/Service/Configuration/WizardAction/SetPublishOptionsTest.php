@@ -119,7 +119,7 @@ class SetPublishOptionsTest extends TestCase
 
     public function optionsProvider()
     {
-        yield 'Wrong delay' => [[null, 'test@mail.com', false], ['delay' => 'error.empty_delay']];
-        yield 'Wrong email' => [[1, null, false], ['emails' => 'error.emails_not_set']];
+        yield 'Wrong delay' => [[null, 'test@mail.com', false], ['delay' => ['error.empty_delay']]];
+        yield 'Wrong email' => [[1, null, false], ['emails' => ['error.emails_not_set']]];
     }
 }

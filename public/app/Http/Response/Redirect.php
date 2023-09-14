@@ -26,7 +26,8 @@ class Redirect implements Response, PayloadRedirect
 
     public function setError(string $key, string $value): void
     {
-        $this->errors[$key] = $value;
+        $this->errors[$key] = $this->errors[$key] ?? [];
+        $this->errors[$key][] = $value;
     }
 
     public function getErrors(): array

@@ -65,7 +65,7 @@ class Session implements Storage
 
     public function getPayload(): array
     {
-        $payload = $_SESSION[self::PAYLOAD_KEY] ?? [];
+        $payload = [...($_SESSION[self::PAYLOAD_KEY] ?? [])];
         unset($_SESSION[self::PAYLOAD_KEY]);
 
         return $payload;

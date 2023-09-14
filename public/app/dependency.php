@@ -13,5 +13,6 @@ return [
     },
     app\Storage\Session::class => function () {
         return \app\Storage\Session::getInstance();
-    }
+    },
+    app\Storage\Payload::class => fn () => new \app\Storage\Payload(\app\Storage\Session::getInstance())
 ];

@@ -98,7 +98,7 @@ class SetPasswordTest extends TestCase
 
     public function getWrongPassword(): \Generator
     {
-        yield 'Empty password' => [null, 'error.empty_password'];
-        yield 'Null password' => ['', 'error.empty_password'];
+        yield 'Empty password' => [null, ['error.empty_password']];
+        yield 'Null password' => ['', ['error.empty_password']];
     }
 }

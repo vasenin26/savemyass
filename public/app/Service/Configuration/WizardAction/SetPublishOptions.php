@@ -81,7 +81,7 @@ class SetPublishOptions implements WizardAction
             $exception->addError('delay', 'error.empty_delay');
         }
 
-        if (is_null($emails)) {
+        if (empty($emails)) {
             $exception->addError('emails', 'error.emails_not_set');
         }
 

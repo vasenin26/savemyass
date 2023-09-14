@@ -5,7 +5,7 @@ namespace app\Utils;
 class ValidationErrors
 {
     public function __construct(
-        public readonly array $errors
+        private readonly array $errors
     ) {
     }
 
@@ -16,6 +16,11 @@ class ValidationErrors
 
     public function get(string $field): array
     {
-        return $this->errors[$field];
+        return $this->errors[$field] ?? [];
+    }
+
+    public function first(string $field): string
+    {
+        return current($this->get($field));
     }
 }
