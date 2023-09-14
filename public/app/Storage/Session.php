@@ -5,7 +5,7 @@ namespace app\Storage;
 class Session implements Storage
 {
     public const OPTION_LANG = 'lang';
-    const PAYLOAD_KEY = 'app_redirect_payload';
+    public const PAYLOAD_KEY = 'app_redirect_payload';
     private array $options = [];
 
     private function __construct()

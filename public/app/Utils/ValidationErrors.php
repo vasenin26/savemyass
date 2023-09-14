@@ -6,8 +6,7 @@ class ValidationErrors
 {
     public function __construct(
         public readonly array $errors
-    )
-    {
+    ) {
     }
 
     public function has(string $field): bool

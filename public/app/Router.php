@@ -6,8 +6,8 @@ use app\Http\Request\HttpRequest;
 
 class Router
 {
-    const GET_ACTION = 'getAction';
-    const POST_ACTION = 'postAction';
+    public const GET_ACTION = 'getAction';
+    public const POST_ACTION = 'postAction';
 
     public function __construct(private readonly Http\Request\Request $request)
     {
