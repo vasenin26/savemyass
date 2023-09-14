@@ -3,6 +3,7 @@
 namespace app;
 
 use app\Http\Response\ErrorPage;
+use app\Http\Response\PayloadRedirect;
 use app\I18n\I18n;
 use app\Service\Configuration\MainConfiguration;
 use app\Storage\Session;
@@ -19,7 +20,7 @@ class App
 
     public function __invoke()
     {
-        I18n::setLanguage($this->session->getOption(Session::OPTION_LANG) ?? 'en');
+        I18n::getTranslations($this->session->getOption(Session::OPTION_LANG) ?? 'en');
 
         try {
             $method = $this->router->getAction();
@@ -30,8 +31,12 @@ class App
             $response = new ErrorPage($e);
         }
 
-        foreach($response->getHeaders() as $header) {
+        foreach ($response->getHeaders() as $header) {
             header($header);
+        }
+
+        if ($response instanceof PayloadRedirect) {
+            $this->session->setPayload($response->getPayload());
         }
 
         echo $response->getContent();

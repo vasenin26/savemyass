@@ -2,21 +2,21 @@
 
 namespace Unit\Storage;
 
-use app\Storage\ConfigurationFile;
+use app\Storage\StorageFile;
 use PHPUnit\Framework\TestCase;
 
 class ConfigurationFileTest extends TestCase
 {
     public function testCreateStorage()
     {
-        $storage = new ConfigurationFile('test.data');
+        $storage = new StorageFile('test.data');
 
-        $this->assertInstanceOf(ConfigurationFile::class, $storage);
+        $this->assertInstanceOf(StorageFile::class, $storage);
     }
 
     public function testSaveOptions()
     {
-        $storage = new ConfigurationFile('test.data');
+        $storage = new StorageFile('test.data');
 
         $storage->save();
         $storage->clear();
@@ -37,11 +37,11 @@ class ConfigurationFileTest extends TestCase
             'null_value' => null
         ];
 
-        $storage = new ConfigurationFile($storageFileName);
+        $storage = new StorageFile($storageFileName);
         $storage->setOptions($options);
         $storage->save();
 
-        $storage2 = new ConfigurationFile($storageFileName);
+        $storage2 = new StorageFile($storageFileName);
         $result = $storage2->getOptions();
 
         $this->assertEquals('test', $storage2->getOption('string_value'));

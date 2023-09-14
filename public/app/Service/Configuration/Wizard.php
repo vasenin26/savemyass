@@ -8,6 +8,7 @@ use app\Service\Configuration\WizardAction\FullConfigured;
 use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\SetPublishOptions;
 use app\Service\Configuration\WizardAction\WizardAction;
+use app\ServiceContainer;
 use Exception;
 
 class Wizard
@@ -22,7 +23,7 @@ class Wizard
 
     private readonly WizardAction $state;
 
-    public function __construct(private readonly MainConfiguration $configuration, Request $request)
+    public function __construct(private readonly ServiceContainer $serviceContainer, private readonly MainConfiguration $configuration, Request $request)
     {
         $this->state = $this->getAction($request);
     }
@@ -70,6 +71,6 @@ class Wizard
             self::STATE_CONFIGURED => FullConfigured::class
         ][$state];
 
-        return new $actionClass($this->configuration, $request);
+        return $this->serviceContainer->resolve($actionClass);
     }
 }

@@ -2,9 +2,10 @@
 
 namespace app\Storage;
 
-class Session implements Configuration
+class Session implements Storage
 {
     public const OPTION_LANG = 'lang';
+    const PAYLOAD_KEY = 'app_redirect_payload';
     private array $options = [];
 
     private function __construct()
@@ -55,5 +56,18 @@ class Session implements Configuration
     public function clear(): void
     {
         session_unset();
+    }
+
+    public function setPayload(array $getPayload): void
+    {
+        $_SESSION[self::PAYLOAD_KEY] = $getPayload;
+    }
+
+    public function getPayload(): array
+    {
+        $payload = $_SESSION[self::PAYLOAD_KEY] ?? [];
+        unset($_SESSION[self::PAYLOAD_KEY]);
+
+        return $payload;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace app\Storage;
 
-interface Configuration
+interface Storage
 {
     public function getOptions(): array;
 

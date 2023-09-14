@@ -21,7 +21,7 @@ class Configuration implements ArrayAccess, MainConfiguration
     ];
     private array $options = [];
 
-    public function __construct(private readonly \app\Storage\Configuration $configuration)
+    public function __construct(private readonly \app\Storage\Storage $configuration)
     {
         $this->options = $this->configuration->getOptions();
     }
