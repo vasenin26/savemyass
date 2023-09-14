@@ -10,6 +10,7 @@ use app\Http\Request\Request;
 use app\I18n\I18n;
 use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
+use app\View\LayoutTemplate;
 use Mockery\Exception;
 
 class SetPassword implements WizardAction
@@ -30,10 +31,11 @@ class SetPassword implements WizardAction
 
     private function showForm(): Response
     {
-        return new HtmlPage('wizard/password_form', [
+        $template = new LayoutTemplate('wizard/password_form', [
             ...$this->configuration->getOptions(),
             'title' => I18n::get('set_password.title')
         ]);
+        return new HtmlPage($template);
     }
 
     private function saveForm(): Redirect

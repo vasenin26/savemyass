@@ -26,6 +26,16 @@ class RouterTest extends TestCase
         $this->assertEquals($exceptedController, $controller);
     }
 
+    public function testGetMethodAction()
+    {
+        $request = Mockery::mock(\app\Http\Request\Request::class);
+        $request->shouldReceive('getMethod')->andReturn('GET');
+
+        $route = new Router($request);
+
+        $this->assertEquals('getAction', $route->getAction());
+    }
+
     public function getControllerMap(): \Iterator
     {
         yield 'Main Controller' => ['/', Main::class];

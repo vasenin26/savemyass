@@ -4,6 +4,7 @@ namespace Unit;
 
 use app\App;
 use app\ServiceContainer;
+use app\Storage\Session;
 use PHPUnit\Framework\TestCase;
 
 class ServiceContainerTest extends TestCase
@@ -27,6 +28,20 @@ class ServiceContainerTest extends TestCase
         $app = $serviceContainer->resolve($serviceClass);
 
         $this->assertInstanceOf($serviceClass, $app);
+    }
+
+    public function testCallAvailableServiceMethod()
+    {
+        $instance = new class{
+            public function testMethod(Session $session){
+                return true;
+            }
+        };
+
+        $serviceContainer = new ServiceContainer();
+        $result = $serviceContainer->call($instance, 'testMethod');
+
+        $this->assertTrue($result);
     }
 
     public function classnameProvider(): \Generator

@@ -5,7 +5,7 @@ namespace app\View;
 use app\I18n\I18n;
 use app\Storage\Session;
 
-abstract class LayoutTemplate extends \app\View\AbstractTemplate
+class LayoutTemplate extends \app\View\AbstractTemplate
 {
     public const LAYOUT_FILE = 'layout';
 

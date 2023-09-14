@@ -11,6 +11,7 @@ use app\Http\Request\Request;
 use app\I18n\I18n;
 use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
+use app\View\LayoutTemplate;
 use Mockery\Exception;
 
 class SetPublishOptions implements WizardAction
@@ -31,10 +32,12 @@ class SetPublishOptions implements WizardAction
 
     private function showForm(): Response
     {
-        return new HtmlPage('wizard/publish_options_form', [
+        $template = new LayoutTemplate('wizard/publish_options_form', [
             ...$this->configuration->getOptions(),
             'title' => I18n::get('publish_options.title')
         ]);
+
+        return new HtmlPage($template);
     }
 
     private function saveForm(): Redirect

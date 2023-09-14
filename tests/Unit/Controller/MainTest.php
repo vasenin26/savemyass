@@ -58,7 +58,7 @@ class MainTest extends TestCase
         $configuration->shouldReceive('isPublish')->andReturn(true);
 
         $publisher = \Mockery::mock(Publisher::class);
-        $publisher->shouldReceive('getPublicPage')->andReturn(new HtmlPage(''));
+        $publisher->shouldReceive('getPublicPage')->andReturn(\Mockery::mock(HtmlPage::class));
         $publisher->shouldReceive('publish');
 
         $request = \Mockery::mock(Request::class);
