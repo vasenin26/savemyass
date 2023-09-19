@@ -2,6 +2,7 @@
 
 namespace app\Service\Configuration;
 
+use app\Http\Request\HttpRequest;
 use app\Http\Request\Request;
 use app\Http\Response\Response;
 use app\Service\Configuration\WizardAction\FullConfigured;
@@ -23,14 +24,21 @@ class Wizard
 
     private readonly WizardAction $state;
 
-    public function __construct(private readonly ServiceContainer $serviceContainer, private readonly MainConfiguration $configuration, Request $request)
+    public function __construct(private readonly ServiceContainer $serviceContainer, private readonly MainConfiguration $configuration, private readonly Request $request)
     {
         $this->state = $this->getAction($request);
     }
 
+    /**
+     * @throws Exception
+     */
     public function execute(): Response
     {
-        return $this->state->execute();
+        return match ($this->request->getMethod()) {
+            HttpRequest::METHOD_GET => $this->state->showForm(),
+            HttpRequest::METHOD_POST => $this->state->saveForm(),
+            default => throw new Exception('Method not allowed'),
+        };
     }
 
     /**

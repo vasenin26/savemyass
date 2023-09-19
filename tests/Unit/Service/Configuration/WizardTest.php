@@ -19,7 +19,7 @@ class WizardTest extends TestCase
     public function testGetAction()
     {
         $wizardAction = \Mockery::mock(WizardAction::class);
-        $wizardAction->shouldReceive('execute')->andReturn(\Mockery::mock(Response::class));
+        $wizardAction->shouldReceive('showForm')->andReturn(\Mockery::mock(HtmlPage::class));
 
         $serviceContainer = \Mockery::mock(ServiceContainer::class);
         $serviceContainer->shouldReceive('resolve')->andReturn($wizardAction);
@@ -43,7 +43,7 @@ class WizardTest extends TestCase
     public function testConfiguredWizard()
     {
         $wizardAction = \Mockery::mock(WizardAction::class);
-        $wizardAction->shouldReceive('execute')->andReturn(\Mockery::mock(Response::class));
+        $wizardAction->shouldReceive('showForm')->andReturn(\Mockery::mock(HtmlPage::class));
 
         $serviceContainer = \Mockery::mock(ServiceContainer::class);
         $serviceContainer->shouldReceive('resolve')->andReturn($wizardAction);

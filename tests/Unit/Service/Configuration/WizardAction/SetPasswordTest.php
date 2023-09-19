@@ -21,7 +21,7 @@ class SetPasswordTest extends TestCase
         $request->shouldReceive('getMethod')->andReturn(HttpRequest::METHOD_GET);
 
         $action = new SetPassword($configuration, $request);
-        $response = $action->execute();
+        $response = $action->showForm();
 
         $this->assertInstanceOf(HtmlPage::class, $response);
     }
@@ -42,7 +42,7 @@ class SetPasswordTest extends TestCase
         ]);
 
         $action = new SetPassword($configuration, $request);
-        $response = $action->execute();
+        $response = $action->saveForm();
 
         $this->assertInstanceOf(Redirect::class, $response);
     }
@@ -66,7 +66,7 @@ class SetPasswordTest extends TestCase
         ]);
 
         $action = new SetPassword($configuration, $request);
-        $response = $action->execute();
+        $response = $action->saveForm();
 
         $this->assertInstanceOf(Redirect::class, $response);
     }
@@ -88,7 +88,7 @@ class SetPasswordTest extends TestCase
         ]);
 
         $action = new SetPassword($configuration, $request);
-        $response = $action->execute();
+        $response = $action->saveForm();
 
         $this->assertInstanceOf(Redirect::class, $response);
         $errors = $response->getErrors();

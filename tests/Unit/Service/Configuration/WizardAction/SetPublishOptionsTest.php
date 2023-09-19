@@ -29,7 +29,7 @@ class SetPublishOptionsTest extends TestCase
         $payload->shouldReceive('getErrors')->andReturn(\Mockery::mock(ValidationErrors::class));
 
         $action = new SetPublishOptions($configuration, $request, $payload);
-        $response = $action->execute();
+        $response = $action->showForm();
 
         $this->assertInstanceOf(HtmlPage::class, $response);
     }
@@ -53,7 +53,7 @@ class SetPublishOptionsTest extends TestCase
         $payload->shouldReceive('getErrors')->andReturn([]);
 
         $action = new SetPublishOptions($configuration, $request, $payload);
-        $response = $action->execute();
+        $response = $action->saveForm();
 
         $this->assertInstanceOf(Redirect::class, $response);
     }
@@ -81,7 +81,7 @@ class SetPublishOptionsTest extends TestCase
         $payload->shouldReceive('getErrors')->andReturn([]);
 
         $action = new SetPublishOptions($configuration, $request, $payload);
-        $response = $action->execute();
+        $response = $action->saveForm();
 
         $this->assertInstanceOf(Redirect::class, $response);
         $this->assertEmpty($response->getErrors());
@@ -111,7 +111,7 @@ class SetPublishOptionsTest extends TestCase
         $payload->shouldReceive('getErrors')->andReturn([]);
 
         $action = new SetPublishOptions($configuration, $request, $payload);
-        $response = $action->execute();
+        $response = $action->saveForm();
 
         $this->assertInstanceOf(Redirect::class, $response);
         $this->assertEquals($errors, $response->getErrors());
