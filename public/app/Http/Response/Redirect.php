@@ -2,14 +2,14 @@
 
 namespace app\Http\Response;
 
+use app\Http\RequestPayload;
+
 class Redirect implements Response, PayloadRedirect
 {
     private array $errors = [];
-    private array $payload = [];
 
-    public function __construct(readonly string $url)
+    public function __construct(readonly string $url, private ?RequestPayload $payload = null)
     {
-
     }
 
     public function getContent(): string
@@ -24,23 +24,21 @@ class Redirect implements Response, PayloadRedirect
         ];
     }
 
-    public function setError(string $key, string $value): void
-    {
-        $this->errors[$key] = $this->errors[$key] ?? [];
-        $this->errors[$key][] = $value;
-    }
-
     public function getErrors(): array
     {
-        return $this->errors;
+        if($this->payload) {
+            return $this->payload->getErrors();
+        }
+
+        return [];
     }
 
-    public function getPayload(): array
+    public function getPayload(): ?RequestPayload
     {
-        return [...$this->payload, 'errors' => $this->errors];
+        return $this->payload;
     }
 
-    public function setPayload(array $payload): void
+    public function setPayload(RequestPayload $payload): void
     {
         $this->payload = $payload;
     }

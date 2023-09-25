@@ -8,6 +8,7 @@ use app\Http\Response\HtmlPage;
 use app\Http\Response\Redirect;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\WizardAction\SetPassword;
+use app\Utils\Validator\NotEmpty;
 use PHPUnit\Framework\TestCase;
 
 class SetPasswordTest extends TestCase
@@ -98,7 +99,7 @@ class SetPasswordTest extends TestCase
 
     public function getWrongPassword(): \Generator
     {
-        yield 'Empty password' => [null, ['error.empty_password']];
-        yield 'Null password' => ['', ['error.empty_password']];
+        yield 'Empty password' => [null, [NotEmpty::ERROR]];
+        yield 'Null password' => ['', [NotEmpty::ERROR]];
     }
 }

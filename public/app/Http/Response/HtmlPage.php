@@ -3,7 +3,6 @@
 namespace app\Http\Response;
 
 use app\View\AbstractTemplate;
-use app\View\LayoutTemplate;
 
 class HtmlPage implements Response
 {

@@ -26,7 +26,7 @@ class Wizard
 
     public function __construct(private readonly ServiceContainer $serviceContainer, private readonly MainConfiguration $configuration, private readonly Request $request)
     {
-        $this->state = $this->getAction($request);
+        $this->state = $this->getAction();
     }
 
     /**
@@ -44,10 +44,10 @@ class Wizard
     /**
      * @throws Exception
      */
-    private function getAction(Request $request): WizardAction
+    private function getAction(): WizardAction
     {
         $state = $this->getWizardState();
-        return $this->getStateAction($state, $request);
+        return $this->getStateAction($state);
     }
 
     /**
@@ -71,7 +71,7 @@ class Wizard
     /**
      * @throws Exception
      */
-    private function getStateAction(?string $state, Request $request): WizardAction
+    private function getStateAction(?string $state): WizardAction
     {
         $actionClass = [
             self::STATE_SET_PASSWORD => SetPassword::class,

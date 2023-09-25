@@ -12,6 +12,7 @@ use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\SetPublishOptions;
 use app\Storage\Payload;
 use app\Utils\ValidationErrors;
+use app\Utils\Validator\NotEmpty;
 use Mockery\Mock;
 use PHPUnit\Framework\TestCase;
 
@@ -119,7 +120,7 @@ class SetPublishOptionsTest extends TestCase
 
     public function optionsProvider()
     {
-        yield 'Wrong delay' => [[null, 'test@mail.com', false], ['delay' => ['error.empty_delay']]];
-        yield 'Wrong email' => [[1, null, false], ['emails' => ['error.emails_not_set']]];
+        yield 'Wrong delay' => [[null, 'test@mail.com', false], ['delay' => [NotEmpty::ERROR]]];
+        yield 'Wrong email' => [[1, null, false], ['emails' => [NotEmpty::ERROR]]];
     }
 }

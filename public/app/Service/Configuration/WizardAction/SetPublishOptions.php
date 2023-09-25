@@ -2,13 +2,13 @@
 
 namespace app\Service\Configuration\WizardAction;
 
-use app\Exceptions\ValidationException;
 use app\Http\Response\HtmlPage;
 use app\Http\Response\Redirect;
 use app\Http\Request\Request;
 use app\I18n\I18n;
 use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
+use app\Service\Configuration\Payload\PublishOptionsFormPayload;
 use app\Storage\Payload;
 use app\View\LayoutTemplate;
 
@@ -32,51 +32,16 @@ class SetPublishOptions implements WizardAction
 
     public function saveForm(): Redirect
     {
+        $payload = new PublishOptionsFormPayload($this->request);
 
-        $redirect = new Redirect('/wizard');
+        if($payload->isValid()) {
+            $this->configuration->setOption(Configuration::PUBLISH_OPTION_TIMESTAMP, time() + $payload->getDelay() * 60 * 60 * 24);
+            $this->configuration->setOption(Configuration::PUBLISH_OPTION_EMAILS, $payload->getEmails());
+            $this->configuration->setOption(Configuration::PUBLISH_OPTION_FOR_ALL, $payload->isForAll());
 
-        try {
-            list($delay, $emails, $forAll) = $this->getPayload($this->request);
-        } catch (ValidationException $exception) {
-            foreach ($exception->getErrors() as $field => $error) {
-                $redirect->setError($field, $error);
-            }
-
-            return $redirect;
+            $this->configuration->save();
         }
 
-        $this->configuration->setOption(Configuration::PUBLISH_OPTION_TIMESTAMP, time() + $delay * 60 * 60 * 24);
-        $this->configuration->setOption(Configuration::PUBLISH_OPTION_EMAILS, $emails);
-        $this->configuration->setOption(Configuration::PUBLISH_OPTION_FOR_ALL, $forAll);
-
-        $this->configuration->save();
-
-        return $redirect;
-    }
-
-    /**
-     * @throws ValidationException
-     */
-    private function getPayload(Request $request): array
-    {
-        $exception = new ValidationException();
-
-        $delay = $request->getPayload('delay');
-        $emails = $request->getPayload('emails');
-        $forAll = $request->getPayload('for_all');
-
-        if (empty($delay)) {
-            $exception->addError('delay', 'error.empty_delay');
-        }
-
-        if (empty($emails)) {
-            $exception->addError('emails', 'error.emails_not_set');
-        }
-
-        if ($exception->isError()) {
-            throw $exception;
-        }
-
-        return [$delay, $emails, $forAll];
+        return new Redirect('/wizard', $payload);
     }
 }
