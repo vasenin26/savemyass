@@ -37,7 +37,7 @@ abstract class AbstractPayload implements RequestPayload
 
                 if (!$validator->isValid()) {
                     array_key_exists($field, $this->errors) || $this->errors[$field] = [];
-                    $this->errors[$field][] = $validator->getError();
+                    $this->errors[$field][] = $field . '.'. $validator->getError();
                 }
 
                 $this->payload[$field] = $value;
