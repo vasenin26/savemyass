@@ -10,7 +10,8 @@ return [
     'publish_options.field.delay' => 'Задержка публикации (дней):',
     'publish_options.field.emails' => 'Почта доверенных лиц:',
 
-    'error.emails_not_set' => 'Нужно указать хотя бы один почтовый адрес',
+    'emails.error.field_is_empty' => 'Нужно указать хотя бы одну почту',
+    'password.error.field_is_empty' => 'Необходимо указать пароль',
 
     'form.action.save' => 'Сохранить'
 ];

@@ -12,5 +12,6 @@ return [
 
     'form.action.save' => 'Save',
 
-    'error.emails_not_set' => 'You must set at least one email address',
+    'emails.error.field_is_empty' => 'You must set at least one email address',
+    'password.error.field_is_empty' => 'You must set a password',
 ];
