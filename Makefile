@@ -20,5 +20,8 @@ csfix:
 coverage:
 	docker compose exec --user=local -e XDEBUG_MODE=coverage httpd vendor/bin/phpunit --coverage-html coverage
 
+mutate:
+	docker compose exec --user=local httpd vendor/bin/infection --threads=max
+
 clear:
 	rm -fR ./coverage .phpunit.cache .php-cs-fixer.cache .phpunit.result.cache
