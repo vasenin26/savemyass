@@ -4,7 +4,7 @@ namespace app\Utils\Validator;
 
 abstract class AbstractValidator
 {
-    const ERROR = null;
+    public const ERROR = null;
 
     public function __construct(protected mixed $value)
     {
