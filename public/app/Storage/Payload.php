@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace app\Storage;
 
+use app\Http\RequestPayload;
 use app\Utils\ValidationErrors;
 
 class Payload
 {
-    /**
-     * @var array|array[]
-     */
-    private array $payload;
+    private ?RequestPayload $payload;
 
     public function __construct(Session $session)
     {
@@ -23,6 +21,12 @@ class Payload
      */
     public function getErrors(): ValidationErrors
     {
-        return new ValidationErrors($this->payload['errors'] ?? []);
+        $errors = [];
+
+        if($this->payload) {
+            $errors = $this->payload->getErrors();
+        }
+
+        return new ValidationErrors($errors);
     }
 }

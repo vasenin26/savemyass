@@ -6,5 +6,5 @@ interface RequestPayload
 {
     public function isValid(): bool;
 
-    public function getErrors();
+    public function getErrors(): array;
 }

@@ -2,6 +2,8 @@
 
 namespace app\Storage;
 
+use app\Http\RequestPayload;
+
 class Session implements Storage
 {
     public const OPTION_LANG = 'lang';
@@ -58,14 +60,14 @@ class Session implements Storage
         session_unset();
     }
 
-    public function setPayload(array $getPayload): void
+    public function setPayload(RequestPayload $payload): void
     {
-        $_SESSION[self::PAYLOAD_KEY] = $getPayload;
+        $_SESSION[self::PAYLOAD_KEY] = $payload;
     }
 
-    public function getPayload(): array
+    public function getPayload(): ?RequestPayload
     {
-        $payload = [...($_SESSION[self::PAYLOAD_KEY] ?? [])];
+        $payload = $_SESSION[self::PAYLOAD_KEY] ?? null;
         unset($_SESSION[self::PAYLOAD_KEY]);
 
         return $payload;
