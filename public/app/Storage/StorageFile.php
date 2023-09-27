@@ -2,6 +2,9 @@
 
 namespace app\Storage;
 
+use app\Utils\Converter\StringConverter;
+use ErrorException;
+
 class StorageFile implements Storage
 {
     private const DIRECTORY = '/data/';
@@ -50,6 +53,7 @@ class StorageFile implements Storage
             return;
         }
 
+        $converter = new StringConverter();
         $this->options = [];
 
         foreach ($lines as $line) {
@@ -61,34 +65,18 @@ class StorageFile implements Storage
 
             list($key, $value) = $line;
 
-            if ($value === "true") {
-                $value = true;
-            }
-            if ($value === "false") {
-                $value = false;
-            }
-            if (is_numeric($value)) {
-                $value = (int)$value;
-            }
-
-            $this->options[$key] = $value;
+            $this->options[$key] = $converter->extract($value);
         }
     }
 
     public function save(): void
     {
-
+        $converter = new StringConverter();
         $file = fopen($this->getPath(), 'w+');
 
-        fwrite($file, implode("\n", array_map(function ($item) {
+        fwrite($file, implode("\n", array_map(function ($item) use ($converter) {
             $value = $this->options[$item];
-
-            if ($value === true) {
-                $value = "true";
-            }
-            if ($value === false) {
-                $value = "false";
-            }
+            $value = $converter->convert($value);
 
             return "{$item}={$value}";
         }, array_keys($this->options))));
@@ -96,8 +84,15 @@ class StorageFile implements Storage
         fclose($file);
     }
 
+    /**
+     * @throws ErrorException
+     */
     public function clear(): void
     {
         unlink($this->getPath());
+
+        if(file_exists($this->getPath())) {
+            throw new ErrorException('Cannot delete storage file');
+        }
     }
 }
