@@ -11,7 +11,7 @@ bash:
 	docker compose exec --user=local -it httpd sh
 
 test:
-	docker compose exec --user=local httpd vendor/bin/phpunit
+	docker compose exec --user=local httpd vendor/bin/phpunit --testdox
 
 csfix:
 	docker compose exec --user=local httpd vendor/bin/php-cs-fixer fix public/

@@ -5,7 +5,8 @@ namespace app\Service\Configuration;
 use app\Http\Request\HttpRequest;
 use app\Http\Request\Request;
 use app\Http\Response\Response;
-use app\Service\Configuration\WizardAction\FullConfigured;
+use app\Service\Configuration\WizardAction\Congratulations;
+use app\Service\Configuration\WizardAction\SetMessage;
 use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\SetPublishOptions;
 use app\Service\Configuration\WizardAction\UploadFiles;
@@ -18,11 +19,13 @@ class Wizard
     private const STATE_SET_PASSWORD = 0b000000000;
     private const STATE_SET_PUBLISH_OPTIONS = 0b000000001;
     private const STATE_UPLOAD_FILES = 0b000000010;
+    private const STATE_MESSAGE_SET = 0b000000011;
     private const STATE_CONFIGURED = 'configured';
     public const CONFIGURED_OPTION_TO_STATE = [
         Configuration::PASSWORD_OPTION_NAME => self::STATE_SET_PASSWORD,
         Configuration::PUBLISH_OPTION_TIMESTAMP => self::STATE_SET_PUBLISH_OPTIONS,
-        Configuration::PUBLISH_FILES_UPLOADED => self::STATE_UPLOAD_FILES
+        Configuration::PUBLISH_FILES_UPLOADED => self::STATE_UPLOAD_FILES,
+        Configuration::PUBLISH_OPTION_MESSAGE => self::STATE_MESSAGE_SET
     ];
 
     private readonly WizardAction $state;
@@ -79,8 +82,9 @@ class Wizard
         $actionClass = [
             self::STATE_SET_PASSWORD => SetPassword::class,
             self::STATE_SET_PUBLISH_OPTIONS => SetPublishOptions::class,
-            self::STATE_CONFIGURED => FullConfigured::class,
-            self::STATE_UPLOAD_FILES => UploadFiles::class
+            self::STATE_UPLOAD_FILES => UploadFiles::class,
+            self::STATE_CONFIGURED => Congratulations::class,
+            self::STATE_MESSAGE_SET => SetMessage::class
         ][$state];
 
         return $this->serviceContainer->resolve($actionClass);

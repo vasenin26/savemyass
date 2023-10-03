@@ -24,6 +24,17 @@
     text-align: center;
     margin-bottom: 0;
 }
+
+.form__row--wide {
+    display: block;
+}
+
+.form__row--wide .form__col--label,
+.form__row--wide .form__col--field {
+    display: block;
+    width: 100%
+}
+
 .form__row--error {
     display: block;
     text-align: center;
@@ -43,9 +54,11 @@
 
 }
 
-.form__col--field input {
+.form__col--field input,
+.form__col--field textarea {
     border: 1px solid gray;
     border-radius: 2px;
+    display: block;
     height: var(--field-height);
     line-height: var(--field-height);
     width: 100%;
@@ -54,7 +67,16 @@
 .form__button {
     border: 1px solid gray;
     border-radius: 3px;
+    cursor: pointer;
     height: var(--field-height);
     line-height: var(--field-height);
     padding: 0 30px;
+}
+
+textarea {
+    box-sizing: border-box;
+    resize: none;
+    height: 400px!important;
+    line-height: 1.2!important;
+    padding: 15px;
 }
