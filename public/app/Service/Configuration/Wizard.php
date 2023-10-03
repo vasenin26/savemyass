@@ -8,18 +8,21 @@ use app\Http\Response\Response;
 use app\Service\Configuration\WizardAction\FullConfigured;
 use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\SetPublishOptions;
+use app\Service\Configuration\WizardAction\UploadFiles;
 use app\Service\Configuration\WizardAction\WizardAction;
 use app\ServiceContainer;
 use Exception;
 
 class Wizard
 {
-    private const STATE_SET_PASSWORD = 0x0;
-    private const STATE_SET_PUBLISH_OPTIONS = 0x1;
+    private const STATE_SET_PASSWORD = 0b000000000;
+    private const STATE_SET_PUBLISH_OPTIONS = 0b000000001;
+    private const STATE_UPLOAD_FILES = 0b000000010;
     private const STATE_CONFIGURED = 'configured';
     public const CONFIGURED_OPTION_TO_STATE = [
         Configuration::PASSWORD_OPTION_NAME => self::STATE_SET_PASSWORD,
-        Configuration::PUBLISH_OPTION_TIMESTAMP => self::STATE_SET_PUBLISH_OPTIONS
+        Configuration::PUBLISH_OPTION_TIMESTAMP => self::STATE_SET_PUBLISH_OPTIONS,
+        Configuration::PUBLISH_FILES_UPLOADED => self::STATE_UPLOAD_FILES
     ];
 
     private readonly WizardAction $state;
@@ -76,7 +79,8 @@ class Wizard
         $actionClass = [
             self::STATE_SET_PASSWORD => SetPassword::class,
             self::STATE_SET_PUBLISH_OPTIONS => SetPublishOptions::class,
-            self::STATE_CONFIGURED => FullConfigured::class
+            self::STATE_CONFIGURED => FullConfigured::class,
+            self::STATE_UPLOAD_FILES => UploadFiles::class
         ][$state];
 
         return $this->serviceContainer->resolve($actionClass);

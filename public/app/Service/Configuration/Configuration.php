@@ -11,13 +11,15 @@ class Configuration implements ArrayAccess, MainConfiguration
     public const PUBLISH_OPTION_EMAILS = 'emails';
     public const PUBLISH_OPTION_MESSAGE = 'message';
     public const PUBLISH_OPTION_FOR_ALL = 'for_all';
+    public const PUBLISH_FILES_UPLOADED = 'files_uploaded';
 
     private const REQUIRE_OPTIONS = [
         self::PASSWORD_OPTION_NAME,
         self::PUBLISH_OPTION_TIMESTAMP,
         self::PUBLISH_OPTION_EMAILS,
         self::PUBLISH_OPTION_MESSAGE,
-        self::PUBLISH_OPTION_FOR_ALL
+        self::PUBLISH_OPTION_FOR_ALL,
+        self::PUBLISH_FILES_UPLOADED
     ];
     private array $options = [];
 

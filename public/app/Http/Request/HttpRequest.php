@@ -29,7 +29,7 @@ class HttpRequest implements Request
         return $this->payload;
     }
 
-    public function getPayload(string $key): int|string|null
+    public function getPayload(string $key): int|string|array|null
     {
         return $this->getPayloadData()[$key] ?? null;
     }

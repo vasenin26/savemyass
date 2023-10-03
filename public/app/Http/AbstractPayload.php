@@ -13,7 +13,7 @@ abstract class AbstractPayload implements RequestPayload
 
     protected array $rules = [];
 
-    final public function __construct(private readonly Request $request)
+    final public function __construct(protected readonly Request $request)
     {
         $this->doValidateRequest();
     }
@@ -31,8 +31,9 @@ abstract class AbstractPayload implements RequestPayload
     private function doValidateRequest(): void
     {
         foreach ($this->rules as $field => $rules) {
+            $value = $this->request->getPayload($field);
+
             foreach ($rules as $rule) {
-                $value = $this->request->getPayload($field);
                 $validator = $this->getValidator($value, $rule);
 
                 if (!$validator->isValid()) {
@@ -40,8 +41,9 @@ abstract class AbstractPayload implements RequestPayload
                     $this->errors[$field][] = $field . '.'. $validator->getError();
                 }
 
-                $this->payload[$field] = $value;
             }
+
+            $this->payload[$field] = $value;
         }
     }
 
@@ -54,7 +56,7 @@ abstract class AbstractPayload implements RequestPayload
     {
         if (str_starts_with($method, 'get')) {
             $field = strtolower(substr($method, 3));
-            return $this->payload[$field];
+            return $this->payload[$field] ?? null;
         }
 
         return null;

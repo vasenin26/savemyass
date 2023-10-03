@@ -8,5 +8,5 @@ interface Request
 
     public function getPayloadData(): array;
 
-    public function getPayload(string $key): int|string|null;
+    public function getPayload(string $key): int|string|array|null;
 }
