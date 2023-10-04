@@ -6,7 +6,7 @@
             <label><?= \app\I18n\I18n::get('set_password.field.password') ?></label>
         </div>
         <div class="form__col form__col--field">
-            <input type="password" name="password" required>
+            <input type="password" name="password" required value="?<?= $password ?? ''?>">
         </div>
     </div>
     <div class="form__row form__row--actions">

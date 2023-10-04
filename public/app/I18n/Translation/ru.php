@@ -13,5 +13,14 @@ return [
     'emails.error.field_is_empty' => 'Нужно указать хотя бы одну почту',
     'password.error.field_is_empty' => 'Необходимо указать пароль',
 
-    'form.action.save' => 'Сохранить'
+    'congratulations.title' => 'Поздравляем!',
+    'congratulations.dsc' => 'Проверьте указанные параметры, после чего нажмите кнопку "Закончить" или "Перезапустить настройку"',
+
+    'protected.title' => 'Данные не доступы',
+    'protected.dsc' => 'Данные будут опубликованы: ',
+
+
+    'form.action.save' => 'Сохранить',
+    'form.action.finish' => 'Закончить',
+    'form.action.reset' => 'Перезапустить настройку'
 ];

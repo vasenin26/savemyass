@@ -6,7 +6,7 @@
             <label><?= \app\I18n\I18n::get('publish_options.field.delay') ?></label>
         </div>
         <div class="form__col form__col--field">
-            <input type="number" name="delay" value="14">
+            <input type="number" name="delay" value="<?= $delay ?? 14?>">
         </div>
     </div>
     <div class="form__row">
@@ -14,7 +14,7 @@
             <label><?= \app\I18n\I18n::get('publish_options.field.emails') ?></label>
         </div>
         <div class="form__col form__col--field">
-            <input name="emails" value="">
+            <input name="emails" value="<?= $emails ?? ''?>">
         </div>
     </div>
     <?php if ($errors->has('emails')): ?>

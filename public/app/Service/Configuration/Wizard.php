@@ -88,12 +88,7 @@ class Wizard
      */
     private function getWizardState(): ?int
     {
-        if ($this->configuration->isConfigured()) {
-            return self::STATE_CONFIGURED;
-        }
-
         $stateNumber = $this->session->getOption(self::STATE_SESSION_KEY_NAME) ?? 0;
-
         return self::CONFIGURED_OPTION_ORDER[$stateNumber] ?? null;
     }
 
@@ -121,6 +116,7 @@ class Wizard
 
     public function reset(): void
     {
+        $this->configuration->isConfigured();
         $this->session->setOption(self::STATE_SESSION_KEY_NAME, $this->getFirstStep());
         $this->session->save();
     }

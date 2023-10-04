@@ -6,7 +6,7 @@
             <label for="message"><?= \app\I18n\I18n::get('set_message.field.message') ?></label>
         </div>
         <div class="form__col form__col--field">
-            <textarea id="message" name="message"></textarea>
+            <textarea id="message" name="message"><?= $message ?? '' ?></textarea>
         </div>
     </div>
     <div class="form__row form__row--actions">

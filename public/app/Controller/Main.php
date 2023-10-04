@@ -26,7 +26,7 @@ final class Main
                 return $this->publisher->getPublicPage();
             }
 
-            return new ProtectedPage();
+            return new ProtectedPage($this->configuration);
         }
 
         return new Redirect('/wizard');
