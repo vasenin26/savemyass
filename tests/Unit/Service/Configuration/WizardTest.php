@@ -6,17 +6,23 @@ use app\Http\Response\HtmlPage;
 use app\Http\Response\Response;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\WizardAction\WizardAction;
+use app\Service\Configuration\WizardCommand\AbstractCommand;
 use app\ServiceContainer;
 use app\Storage\Session;
 use PHPUnit\Framework\TestCase;
-use app\Service\Configuration\Wizard;;
+use app\Service\Configuration\Wizard;
+
+;
 
 class WizardTest extends TestCase
 {
     public function testGetAction()
     {
+        $command = \Mockery::mock(AbstractCommand::class);
+        $command->shouldReceive('execute')->andReturn(\Mockery::mock(HtmlPage::class));
+
         $wizardAction = \Mockery::mock(WizardAction::class);
-        $wizardAction->shouldReceive('showForm')->andReturn(\Mockery::mock(HtmlPage::class));
+        $wizardAction->shouldReceive('showForm')->andReturn($command);
 
         $serviceContainer = \Mockery::mock(ServiceContainer::class);
         $serviceContainer->shouldReceive('resolve')->andReturn($wizardAction);
@@ -42,8 +48,11 @@ class WizardTest extends TestCase
 
     public function testConfiguredWizard()
     {
+        $command = \Mockery::mock(AbstractCommand::class);
+        $command->shouldReceive('execute')->andReturn(\Mockery::mock(HtmlPage::class));
+
         $wizardAction = \Mockery::mock(WizardAction::class);
-        $wizardAction->shouldReceive('showForm')->andReturn(\Mockery::mock(HtmlPage::class));
+        $wizardAction->shouldReceive('showForm')->andReturn($command);
 
         $serviceContainer = \Mockery::mock(ServiceContainer::class);
         $serviceContainer->shouldReceive('resolve')->andReturn($wizardAction);

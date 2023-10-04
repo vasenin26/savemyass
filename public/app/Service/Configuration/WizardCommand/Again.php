@@ -7,7 +7,7 @@ use app\Http\Response\Redirect;
 use app\Http\Response\Response;
 use app\Service\Configuration\Wizard;
 
-class AgainCommand extends AbstractCommand
+class Again extends AbstractCommand
 {
     public function __construct(private readonly RequestPayload $payload)
     {

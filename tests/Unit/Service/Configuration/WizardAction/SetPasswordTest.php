@@ -9,8 +9,9 @@ use app\Http\Response\Redirect;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardCommand\AbstractCommand;
-use app\Service\Configuration\WizardCommand\AgainCommand;
-use app\Service\Configuration\WizardCommand\NextCommand;
+use app\Service\Configuration\WizardCommand\Again;
+use app\Service\Configuration\WizardCommand\Next;
+use app\Service\Configuration\WizardCommand\ShowPage;
 use app\Utils\Validator\NotEmpty;
 use PHPUnit\Framework\TestCase;
 
@@ -27,7 +28,7 @@ class SetPasswordTest extends TestCase
         $action = new SetPassword($configuration, $request);
         $response = $action->showForm();
 
-        $this->assertInstanceOf(HtmlPage::class, $response);
+        $this->assertInstanceOf(ShowPage::class, $response);
     }
 
     public function testGetRedirectAfterOptionSet()
@@ -48,7 +49,7 @@ class SetPasswordTest extends TestCase
         $action = new SetPassword($configuration, $request);
         $response = $action->saveForm();
 
-        $this->assertInstanceOf(AgainCommand::class, $response);
+        $this->assertInstanceOf(Again::class, $response);
     }
 
     public function testSavePassword()
@@ -72,7 +73,7 @@ class SetPasswordTest extends TestCase
         $action = new SetPassword($configuration, $request);
         $response = $action->saveForm();
 
-        $this->assertInstanceOf(NextCommand::class, $response);
+        $this->assertInstanceOf(Next::class, $response);
     }
 
     /**
@@ -94,7 +95,7 @@ class SetPasswordTest extends TestCase
         $action = new SetPassword($configuration, $request);
         $response = $action->saveForm();
 
-        $this->assertInstanceOf(AgainCommand::class, $response);
+        $this->assertInstanceOf(Again::class, $response);
         $errors = $response->getPayload()->getErrors();
 
         $this->assertEquals($errors['password'], $error);

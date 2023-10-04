@@ -10,8 +10,9 @@ use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\Payload\PasswordFormPayload;
 use app\Service\Configuration\WizardCommand\AbstractCommand;
-use app\Service\Configuration\WizardCommand\AgainCommand;
-use app\Service\Configuration\WizardCommand\NextCommand;
+use app\Service\Configuration\WizardCommand\Again;
+use app\Service\Configuration\WizardCommand\Next;
+use app\Service\Configuration\WizardCommand\ShowPage;
 use app\View\LayoutTemplate;
 
 class SetPassword implements WizardAction
@@ -21,13 +22,14 @@ class SetPassword implements WizardAction
 
     }
 
-    public function showForm(): HtmlPage
+    public function showForm(): AbstractCommand
     {
         $template = new LayoutTemplate('wizard/password_form', [
             ...$this->configuration->getOptions(),
             'title' => I18n::get('set_password.title')
         ]);
-        return new HtmlPage($template);
+
+        return new ShowPage(new HtmlPage($template));
     }
 
     public function saveForm(): AbstractCommand
@@ -38,9 +40,9 @@ class SetPassword implements WizardAction
             $this->configuration->setOption(Configuration::PASSWORD_OPTION_NAME, $payload->getPassword());
             $this->configuration->save();
 
-            return new NextCommand();
+            return new Next();
         }
 
-        return new AgainCommand($payload);
+        return new Again($payload);
     }
 }

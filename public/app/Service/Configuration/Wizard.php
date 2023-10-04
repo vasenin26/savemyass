@@ -12,6 +12,7 @@ use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\SetPublishOptions;
 use app\Service\Configuration\WizardAction\UploadFiles;
 use app\Service\Configuration\WizardAction\WizardAction;
+use app\Service\Configuration\WizardCommand\AbstractCommand;
 use app\ServiceContainer;
 use app\Storage\Session;
 use Exception;
@@ -30,7 +31,7 @@ class Wizard
         self::STATE_SET_PUBLISH_OPTIONS,
         self::STATE_CONFIGURED,
     ];
-    const STATE_SESSION_KEY_NAME = 'configuration_wizard_state';
+    public const STATE_SESSION_KEY_NAME = 'configuration_wizard_state';
 
     private readonly ?WizardAction $state;
 
@@ -42,8 +43,7 @@ class Wizard
         private readonly MainConfiguration $configuration,
         private readonly Request           $request,
         private readonly Session           $session
-    )
-    {
+    ) {
         $this->state = $this->getAction();
     }
 
@@ -57,14 +57,16 @@ class Wizard
             return new Redirect('/');
         }
 
-        switch ($this->request->getMethod()) {
-            case HttpRequest::METHOD_GET:
-                return $this->state->showForm();
-            case HttpRequest::METHOD_POST:
-                return $this->state->saveForm()->execute($this);
-            default:
-                throw new Exception('Method not allowed');
-        }
+        return $this->routeAction()->execute($this);
+    }
+
+    private function routeAction(): AbstractCommand
+    {
+        return match ($this->request->getMethod()) {
+            HttpRequest::METHOD_GET => $this->state->showForm(),
+            HttpRequest::METHOD_POST => $this->state->saveForm(),
+            default => throw new Exception('Method not allowed')
+        };
     }
 
     /**

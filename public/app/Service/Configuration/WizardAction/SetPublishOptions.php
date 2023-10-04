@@ -10,8 +10,9 @@ use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\Payload\PublishOptionsFormPayload;
 use app\Service\Configuration\WizardCommand\AbstractCommand;
-use app\Service\Configuration\WizardCommand\AgainCommand;
-use app\Service\Configuration\WizardCommand\NextCommand;
+use app\Service\Configuration\WizardCommand\Again;
+use app\Service\Configuration\WizardCommand\Next;
+use app\Service\Configuration\WizardCommand\ShowPage;
 use app\Storage\Payload;
 use app\View\LayoutTemplate;
 
@@ -22,7 +23,7 @@ class SetPublishOptions implements WizardAction
 
     }
 
-    public function showForm(): HtmlPage
+    public function showForm(): AbstractCommand
     {
         $template = new LayoutTemplate('wizard/publish_options_form', [
             ...$this->configuration->getOptions(),
@@ -30,7 +31,7 @@ class SetPublishOptions implements WizardAction
             'errors' => $this->payload->getErrors(),
         ]);
 
-        return new HtmlPage($template);
+        return new ShowPage(new HtmlPage($template));
     }
 
     public function saveForm(): AbstractCommand
@@ -44,9 +45,9 @@ class SetPublishOptions implements WizardAction
 
             $this->configuration->save();
 
-            return new NextCommand();
+            return new Next();
         }
 
-        return new AgainCommand( $payload);
+        return new Again($payload);
     }
 }

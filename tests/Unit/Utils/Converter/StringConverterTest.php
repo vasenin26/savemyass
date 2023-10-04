@@ -34,7 +34,7 @@ class StringConverterTest extends TestCase
         $converter = new StringConverter();
         $this->expectException(\ErrorException::class);
 
-        $value = new class {
+        $value = new class () {
             private $foo = 'bar';
         };
 
@@ -49,8 +49,6 @@ class StringConverterTest extends TestCase
         $converter = new StringConverter();
         $converted = $converter->convert($value);
         $restored = $converter->extract($converted);
-
-        var_dump($value, $converted, $restored);
 
         $this->assertEquals($value, $restored);
     }

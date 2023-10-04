@@ -10,8 +10,9 @@ use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\SetPublishOptions;
-use app\Service\Configuration\WizardCommand\AgainCommand;
-use app\Service\Configuration\WizardCommand\NextCommand;
+use app\Service\Configuration\WizardCommand\Again;
+use app\Service\Configuration\WizardCommand\Next;
+use app\Service\Configuration\WizardCommand\ShowPage;
 use app\Storage\Payload;
 use app\Utils\ValidationErrors;
 use app\Utils\Validator\NotEmpty;
@@ -34,7 +35,7 @@ class SetPublishOptionsTest extends TestCase
         $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->showForm();
 
-        $this->assertInstanceOf(HtmlPage::class, $response);
+        $this->assertInstanceOf(ShowPage::class, $response);
     }
 
     public function testGetRedirectAfterOptionSet()
@@ -58,7 +59,7 @@ class SetPublishOptionsTest extends TestCase
         $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->saveForm();
 
-        $this->assertInstanceOf(AgainCommand::class, $response);
+        $this->assertInstanceOf(Again::class, $response);
     }
 
     public function testSavePublishOptions()
@@ -86,7 +87,7 @@ class SetPublishOptionsTest extends TestCase
         $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->saveForm();
 
-        $this->assertInstanceOf(NextCommand::class, $response);
+        $this->assertInstanceOf(Next::class, $response);
     }
 
     /**
@@ -115,7 +116,7 @@ class SetPublishOptionsTest extends TestCase
         $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->saveForm();
 
-        $this->assertInstanceOf(AgainCommand::class, $response);
+        $this->assertInstanceOf(Again::class, $response);
         $this->assertEquals($errors, $response->getPayload()->getErrors());
     }
 

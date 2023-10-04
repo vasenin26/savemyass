@@ -7,6 +7,6 @@ use app\Service\Configuration\WizardCommand\AbstractCommand;
 
 interface WizardAction
 {
-    public function showForm(): HtmlPage;
+    public function showForm(): AbstractCommand;
     public function saveForm(): AbstractCommand;
 }
