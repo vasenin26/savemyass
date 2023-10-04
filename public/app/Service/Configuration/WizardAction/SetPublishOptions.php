@@ -9,6 +9,9 @@ use app\I18n\I18n;
 use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\Payload\PublishOptionsFormPayload;
+use app\Service\Configuration\WizardCommand\AbstractCommand;
+use app\Service\Configuration\WizardCommand\AgainCommand;
+use app\Service\Configuration\WizardCommand\NextCommand;
 use app\Storage\Payload;
 use app\View\LayoutTemplate;
 
@@ -30,7 +33,7 @@ class SetPublishOptions implements WizardAction
         return new HtmlPage($template);
     }
 
-    public function saveForm(): Redirect
+    public function saveForm(): AbstractCommand
     {
         $payload = new PublishOptionsFormPayload($this->request);
 
@@ -40,8 +43,10 @@ class SetPublishOptions implements WizardAction
             $this->configuration->setOption(Configuration::PUBLISH_OPTION_FOR_ALL, $payload->isForAll());
 
             $this->configuration->save();
+
+            return new NextCommand();
         }
 
-        return new Redirect('/wizard', $payload);
+        return new AgainCommand( $payload);
     }
 }

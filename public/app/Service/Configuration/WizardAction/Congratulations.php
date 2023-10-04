@@ -8,6 +8,9 @@ use app\Http\Response\Redirect;
 use app\I18n\I18n;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\Payload\CongratulationsFormPayload;
+use app\Service\Configuration\WizardCommand\AbstractCommand;
+use app\Service\Configuration\WizardCommand\NextCommand;
+use app\Service\Configuration\WizardCommand\ResetCommand;
 use app\Storage\Payload;
 use app\View\LayoutTemplate;
 
@@ -27,17 +30,17 @@ class Congratulations implements WizardAction
         return new HtmlPage($template);
     }
 
-    public function saveForm(): Redirect
+    public function saveForm(): AbstractCommand
     {
         $payload = new CongratulationsFormPayload($this->request);
 
-        if($payload->isSave()) {
-            $this->configuration->setOption('success', 1);
-            $this->configuration->save();
-
-            return new Redirect('/');
+        if($payload->isReset()) {
+            return new ResetCommand();
         }
 
-        return new Redirect('/wizard', $payload);
+        $this->configuration->setOption('success', 1);
+        $this->configuration->save();
+
+        return new NextCommand();
     }
 }

@@ -9,6 +9,9 @@ use app\I18n\I18n;
 use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\Payload\PasswordFormPayload;
+use app\Service\Configuration\WizardCommand\AbstractCommand;
+use app\Service\Configuration\WizardCommand\AgainCommand;
+use app\Service\Configuration\WizardCommand\NextCommand;
 use app\View\LayoutTemplate;
 
 class SetPassword implements WizardAction
@@ -27,15 +30,17 @@ class SetPassword implements WizardAction
         return new HtmlPage($template);
     }
 
-    public function saveForm(): Redirect
+    public function saveForm(): AbstractCommand
     {
         $payload = new PasswordFormPayload($this->request);
 
         if($payload->isValid()) {
             $this->configuration->setOption(Configuration::PASSWORD_OPTION_NAME, $payload->getPassword());
             $this->configuration->save();
+
+            return new NextCommand();
         }
 
-        return new Redirect('/wizard', $payload);
+        return new AgainCommand($payload);
     }
 }

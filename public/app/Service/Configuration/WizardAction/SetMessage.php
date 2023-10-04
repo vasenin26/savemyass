@@ -8,7 +8,9 @@ use app\Http\Request\Request;
 use app\I18n\I18n;
 use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
+use app\Service\Configuration\Payload\MessageFormPayload;
 use app\Service\Configuration\Payload\PasswordFormPayload;
+use app\Service\Configuration\WizardCommand\NextCommand;
 use app\View\LayoutTemplate;
 
 class SetMessage implements WizardAction
@@ -27,15 +29,15 @@ class SetMessage implements WizardAction
         return new HtmlPage($template);
     }
 
-    public function saveForm(): Redirect
+    public function saveForm(): \app\Service\Configuration\WizardCommand\AbstractCommand
     {
-        $payload = new PasswordFormPayload($this->request);
+        $payload = new MessageFormPayload($this->request);
 
         if($payload->isValid()) {
-            $this->configuration->setOption(Configuration::PASSWORD_OPTION_NAME, $payload->getPassword());
+            $this->configuration->setOption(Configuration::PUBLISH_MESSAGE, $payload->getMessage());
             $this->configuration->save();
         }
 
-        return new Redirect('/wizard', $payload);
+        return new NextCommand();
     }
 }

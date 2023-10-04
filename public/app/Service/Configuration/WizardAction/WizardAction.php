@@ -3,10 +3,10 @@
 namespace app\Service\Configuration\WizardAction;
 
 use app\Http\Response\HtmlPage;
-use app\Http\Response\Response;
+use app\Service\Configuration\WizardCommand\AbstractCommand;
 
 interface WizardAction
 {
     public function showForm(): HtmlPage;
-    public function saveForm(): Response;
+    public function saveForm(): AbstractCommand;
 }

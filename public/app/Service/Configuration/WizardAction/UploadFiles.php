@@ -10,6 +10,9 @@ use app\I18n\I18n;
 use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\Payload\UploadFilesFormPayload;
+use app\Service\Configuration\WizardCommand\AbstractCommand;
+use app\Service\Configuration\WizardCommand\AgainCommand;
+use app\Service\Configuration\WizardCommand\NextCommand;
 use app\Storage\Payload;
 use app\View\LayoutTemplate;
 
@@ -31,7 +34,7 @@ class UploadFiles implements WizardAction
         return new HtmlPage($template);
     }
 
-    public function saveForm(): Response
+    public function saveForm(): AbstractCommand
     {
         $payload = new UploadFilesFormPayload($this->request);
 
@@ -39,13 +42,13 @@ class UploadFiles implements WizardAction
             $this->configuration->setOption(Configuration::PUBLISH_FILES_UPLOADED, 1);
             $this->configuration->save();
 
-            return new Redirect('/wizard');
+            return new NextCommand();
         }
 
         $file = $payload->getFile();
 
         move_uploaded_file($file['tmp_name'], 'uploads/' . $file['name']);
 
-        return new Redirect('/wizard', $payload);
+        return new AgainCommand($payload);
     }
 }

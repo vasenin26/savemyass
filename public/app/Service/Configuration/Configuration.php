@@ -12,6 +12,7 @@ class Configuration implements ArrayAccess, MainConfiguration
     public const PUBLISH_OPTION_MESSAGE = 'message';
     public const PUBLISH_OPTION_FOR_ALL = 'for_all';
     public const PUBLISH_FILES_UPLOADED = 'files_uploaded';
+    public const PUBLISH_MESSAGE = 'message';
 
     private const REQUIRE_OPTIONS = [
         self::PASSWORD_OPTION_NAME,

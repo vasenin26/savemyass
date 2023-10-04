@@ -50,6 +50,8 @@ class StringConverterTest extends TestCase
         $converted = $converter->convert($value);
         $restored = $converter->extract($converted);
 
+        var_dump($value, $converted, $restored);
+
         $this->assertEquals($value, $restored);
     }
 
@@ -79,12 +81,13 @@ class StringConverterTest extends TestCase
     public function convenrtEqualProvider()
     {
         return [
-            [true],
-            [false],
-            ['0'],
-            ['1'],
-            [null],
-            ['string'],
+            'true' => [true],
+            'false' => [false],
+            'zero string' => ['0'],
+            'number string' => ['1'],
+            'null' => [null],
+            'simple string' => ['string'],
+            'multiline string' => ["multiline \n string"],
         ];
     }
 }

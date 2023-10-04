@@ -6,8 +6,6 @@ class RedirectBack implements Response
 {
     private array $errors = [];
 
-    private string $url;
-
     public function __construct()
     {
         $this->url = $_SERVER['HTTP_REFERER'] ?? '/';
