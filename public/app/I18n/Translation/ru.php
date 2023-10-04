@@ -19,6 +19,7 @@ return [
     'protected.title' => 'Данные не доступы',
     'protected.dsc' => 'Данные будут опубликованы: ',
 
+    'email.subject' => 'Автоматическое сообщение от:',
 
     'form.action.save' => 'Сохранить',
     'form.action.finish' => 'Закончить',
