@@ -20,4 +20,9 @@ class AgainCommand extends AbstractCommand
 
         return new Redirect('/wizard', $this->payload);
     }
+
+    public function getPayload(): RequestPayload
+    {
+        return $this->payload;
+    }
 }

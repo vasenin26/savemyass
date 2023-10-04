@@ -10,6 +10,8 @@ use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
 use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\SetPublishOptions;
+use app\Service\Configuration\WizardCommand\AgainCommand;
+use app\Service\Configuration\WizardCommand\NextCommand;
 use app\Storage\Payload;
 use app\Utils\ValidationErrors;
 use app\Utils\Validator\NotEmpty;
@@ -56,7 +58,7 @@ class SetPublishOptionsTest extends TestCase
         $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->saveForm();
 
-        $this->assertInstanceOf(Redirect::class, $response);
+        $this->assertInstanceOf(AgainCommand::class, $response);
     }
 
     public function testSavePublishOptions()
@@ -84,8 +86,7 @@ class SetPublishOptionsTest extends TestCase
         $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->saveForm();
 
-        $this->assertInstanceOf(Redirect::class, $response);
-        $this->assertEmpty($response->getErrors());
+        $this->assertInstanceOf(NextCommand::class, $response);
     }
 
     /**
@@ -114,8 +115,8 @@ class SetPublishOptionsTest extends TestCase
         $action = new SetPublishOptions($configuration, $request, $payload);
         $response = $action->saveForm();
 
-        $this->assertInstanceOf(Redirect::class, $response);
-        $this->assertEquals($errors, $response->getErrors());
+        $this->assertInstanceOf(AgainCommand::class, $response);
+        $this->assertEquals($errors, $response->getPayload()->getErrors());
     }
 
     public function optionsProvider()

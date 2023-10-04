@@ -3,16 +3,13 @@
 namespace Unit\Service\Configuration;
 
 use app\Http\Response\HtmlPage;
-use app\Http\Response\Redirect;
 use app\Http\Response\Response;
 use app\Service\Configuration\MainConfiguration;
-use app\Service\Configuration\WizardAction\SetPassword;
 use app\Service\Configuration\WizardAction\WizardAction;
 use app\ServiceContainer;
+use app\Storage\Session;
 use PHPUnit\Framework\TestCase;
-use app\Service\Configuration\MainConfiguration as ConfigurationUtil;
-use app\Service\Configuration\Wizard;
-use PHPUnit\TextUI\XmlConfiguration\Logging\TestDox\Html;
+use app\Service\Configuration\Wizard;;
 
 class WizardTest extends TestCase
 {
@@ -33,7 +30,10 @@ class WizardTest extends TestCase
         $request->shouldReceive('getUri')->andReturn('/');
         $request->shouldReceive('getMethod')->andReturn(\app\Http\Request\HttpRequest::METHOD_GET);
 
-        $wizard = new Wizard($serviceContainer, $configuration, $request);
+        $session = \Mockery::mock(\app\Storage\Session::class);
+        $session->shouldReceive('getOption')->andReturn(0);
+
+        $wizard = new Wizard($serviceContainer, $configuration, $request, $session);
 
         $response = $wizard->execute($request);
 
@@ -55,7 +55,10 @@ class WizardTest extends TestCase
         $request->shouldReceive('getUri')->andReturn('/');
         $request->shouldReceive('getMethod')->andReturn(\app\Http\Request\HttpRequest::METHOD_GET);
 
-        $wizard = new Wizard($serviceContainer, $configuration, $request);
+        $session = \Mockery::mock(\app\Storage\Session::class);
+        $session->shouldReceive('getOption')->andReturn(0);
+
+        $wizard = new Wizard($serviceContainer, $configuration, $request, $session);
 
         $response = $wizard->execute();
 
