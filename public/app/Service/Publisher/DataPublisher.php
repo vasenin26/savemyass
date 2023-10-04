@@ -5,20 +5,24 @@ namespace app\Service\Publisher;
 use app\I18n\I18n;
 use app\Service\Configuration\Configuration;
 use app\Service\Configuration\MainConfiguration;
+use app\Storage\FileStorage;
 use app\View\EmailTemplate;
 use app\View\LayoutTemplate;
 
 class DataPublisher implements Publisher
 {
 
-    public function __construct(private readonly MainConfiguration $configuration)
+    public function __construct(private readonly MainConfiguration $configuration, private readonly FileStorage $fileStorage)
     {
     }
 
     public function getPublicPage(): \app\Http\Response\Response
     {
+
         $template = new LayoutTemplate('page/public', [
-            'title' => I18n::get('protected.title')
+            'title' => I18n::get('protected.title'),
+            ...$this->configuration->getOptions(),
+            'files' => $this->fileStorage->getFiles(),
         ]);
 
         return new \app\Http\Response\HtmlPage($template);
